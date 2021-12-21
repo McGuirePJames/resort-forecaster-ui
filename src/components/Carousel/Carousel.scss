@@ -1,0 +1,52 @@
+@import '../../sass/utilities/variables';
+
+.carousel {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .cards {
+        display: flex;
+        overflow: hidden;
+    }
+
+    .controls {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        color: $color-gray;
+        margin-top: 15px;
+        color: $color-primary-dark;
+
+        &__arrow {
+            font-size: 3rem;
+            cursor: pointer;
+        }
+
+        &__arrow-right {
+            margin-left: auto;
+        }
+
+        .navigation-circles {
+            display: flex;
+            align-items: center;
+            color: $color-primary-dark;
+            margin-left: auto;
+            font-size: 1.2rem;
+            
+            svg {
+                cursor: pointer;
+
+                &:not(:first-child) {
+                    margin-left: 8px;
+                }
+            }
+
+            &__selected {
+                color: $color-primary-light;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

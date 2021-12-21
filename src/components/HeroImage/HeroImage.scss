@@ -1,0 +1,9 @@
+.hero-image {
+    height: 500px;
+
+    img {
+        width: 100%;
+        height: inherit;
+        object-fit: cover;
+    }
+}

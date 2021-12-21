@@ -1,0 +1,13 @@
+@import '../sass/utilities/variables';
+
+body {
+    background-color: $color-secondary;
+}
+
+.app {
+    height: 100vh;
+
+    .footer {
+        margin-top: 30px;
+    }
+}

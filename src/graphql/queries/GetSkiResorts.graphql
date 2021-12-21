@@ -1,0 +1,5 @@
+query GetSkiResorts {
+    skiResorts {
+        ...SkiResortFields
+    }
+}

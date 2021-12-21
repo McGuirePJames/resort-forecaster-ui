@@ -1,0 +1,8 @@
+fragment SkiResortFields on SkiResort {
+    skiResortId
+    name
+    description
+    imageUrl
+    latitude
+    longitude
+}

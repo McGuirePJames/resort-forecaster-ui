@@ -1,0 +1,15 @@
+fragment CurrentForecastFields on CurrentForecast {
+    clouds
+    dewPoint
+    feelsLIke
+    humidity
+    pressure
+    sunrise
+    sunset
+    temp
+    uVI
+    visibility
+    windDeg
+    windGust
+    windSpeed
+}

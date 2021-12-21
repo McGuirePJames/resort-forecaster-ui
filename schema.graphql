@@ -1,0 +1,37 @@
+schema {
+    query: Query
+}
+
+type Query {
+    skiResorts: [SkiResort]
+    forecast(skiResortId: String!): Forecast
+}
+
+type SkiResort {
+    skiResortId: String!
+    name: String
+    description: String
+    imageUrl: String
+    latitude: Float
+    longitude: Float
+}
+
+type Forecast {
+    currentForecast: CurrentForecast
+}
+
+type CurrentForecast {
+    clouds: Float
+    dewPoint: Float
+    feelsLIke: Float
+    humidity: Float
+    pressure: Float
+    sunrise: Float
+    sunset: Float
+    temp: Float
+    uVI: Float
+    visibility: Float
+    windDeg: Float
+    windGust: Float
+    windSpeed: Float
+}
