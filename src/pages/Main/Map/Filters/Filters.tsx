@@ -4,6 +4,7 @@ import {TypeFilter} from './TypeFilter';
 import {AspectFilter} from './AspectFilter';
 import {CauseFilter} from './CauseFilter';
 import ElevationFilter from './ElevationFilter';
+import WidthFilter from './WidthFilter';
 
 export const Filters: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ export const Filters: React.FC = () => {
             <CauseFilter className="filters__filter" />
             <TypeFilter className="filters__filter" />
             <DepthFilter className="filters__filter" />
+            <WidthFilter className="filters__filter" />
             <ElevationFilter className="filters__filter" />
         </div>
     );

@@ -1,23 +1,18 @@
 import {createContext} from 'react';
 
-export interface DepthFilter {
+export interface RangeFilter {
     includeUnknowns: boolean;
-    minAvalancheDepth: number;
-    maxAvalancheDepth: number;
-}
-
-export interface ElevationFilter {
-    includeUnknowns: boolean;
-    minAvalancheElevation: number;
-    maxAvalancheElevation: number;
+    minValue: number;
+    maxValue: number;
 }
 
 export interface Filters {
     aspect: string[];
     cause: string[];
     type: string[];
-    depth: DepthFilter;
-    elevation: ElevationFilter;
+    depth: RangeFilter;
+    elevation: RangeFilter;
+    width: RangeFilter;
 }
 
 export interface AvalancheContext {
@@ -32,13 +27,18 @@ export const AvalancheContext = createContext<AvalancheContext>({
         type: [],
         depth: {
             includeUnknowns: false,
-            minAvalancheDepth: 1,
-            maxAvalancheDepth: 100,
+            minValue: 1,
+            maxValue: 100,
+        },
+        width: {
+            includeUnknowns: false,
+            minValue: 1,
+            maxValue: 100,
         },
         elevation: {
             includeUnknowns: false,
-            minAvalancheElevation: 1,
-            maxAvalancheElevation: 100,
+            minValue: 1,
+            maxValue: 100,
         },
     },
     setFilters: () => {},

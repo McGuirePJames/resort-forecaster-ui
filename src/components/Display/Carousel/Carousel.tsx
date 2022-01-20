@@ -6,9 +6,13 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { CardData } from '../../../models/carousel/CardData';
 import { Card } from '../Card';
 import './Carousel.scss';
+
+export interface CardData {
+    imageUrl: string;
+    title?: string;
+}
 
 interface CarouselProps {
     cardData?: CardData[];

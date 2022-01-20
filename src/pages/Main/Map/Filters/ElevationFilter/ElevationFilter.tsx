@@ -36,8 +36,8 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({className = ''}
 
             avalancheContext.setFilters('elevation', {
                 ...avalancheContext.filters.elevation,
-                minAvalancheElevation: minAvalancheElevation,
-                maxAvalancheElevation: maxAvalancheElevation,
+                minValue: minAvalancheElevation,
+                maxValue: maxAvalancheElevation,
             });
         }
     }, [avalanchesQuery.data?.avalanches]);
@@ -45,10 +45,10 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({className = ''}
     const handleElevationChange = debounce((event: Event, value: number[]) => {
         avalancheContext.setFilters('elevation', {
             ...avalancheContext.filters.elevation,
-            minAvalancheElevation: value[0],
-            maxAvalancheElevation: value[1],
+            minValue: value[0],
+            maxValue: value[1],
         });
-    }, 100);
+    }, 300);
 
     const handleElevationCheckboxChange = (_: any, isChecked: boolean) => {
         avalancheContext.setFilters('elevation', {

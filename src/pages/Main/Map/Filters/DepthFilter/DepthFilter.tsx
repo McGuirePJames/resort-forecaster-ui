@@ -35,8 +35,8 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
             setAvalancheDepthRange(depthRange);
             avalancheContext.setFilters('depth', {
                 ...avalancheContext.filters.depth,
-                minAvalancheDepth: minAvalancheDepth,
-                maxAvalancheDepth: maxAvalancheDepth,
+                minValue: minAvalancheDepth,
+                maxValue: maxAvalancheDepth,
             });
         }
     }, [avalanchesQuery.data?.avalanches]);
@@ -44,10 +44,10 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
     const handleDepthChange = debounce((event: Event, value: number[]) => {
         avalancheContext.setFilters('depth', {
             ...avalancheContext.filters.depth,
-            minAvalancheDepth: value[0],
-            maxAvalancheDepth: value[1],
+            minValue: value[0],
+            maxValue: value[1],
         });
-    }, 100);
+    }, 300);
 
     const handleDepthCheckboxChange = (_: any, isChecked: boolean) => {
         avalancheContext.setFilters('depth', {

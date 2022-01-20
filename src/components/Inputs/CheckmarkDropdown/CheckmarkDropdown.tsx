@@ -60,12 +60,12 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
     return (
         <div className="checkmark-dropdown">
             <FormControl sx={{m: 1, width}} size={'medium'}>
-                <InputLabel id="demo-multiple-checkbox-label">
+                <InputLabel id="checkmark-dropdownlabel">
                     {label}
                 </InputLabel>
                 <Select
-                    labelId="demo-multiple-checkbox-label"
-                    id="demo-multiple-checkbox"
+                    labelId="checkmark-dropdown-label"
+                    id="checkmark-dropdown"
                     multiple
                     value={selectedOptionIds.map(x => x.key)}
                     onChange={handleChange}

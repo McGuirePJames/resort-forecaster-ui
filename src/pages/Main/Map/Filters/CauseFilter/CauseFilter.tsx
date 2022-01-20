@@ -10,12 +10,10 @@ import {useAvailableOptions} from '../../../../../utilities/customHooks/useAvail
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 
 export interface CauseFilterProps {
-    label?: string;
     className?: string;
 }
 
 export const CauseFilter: React.FC<CauseFilterProps> = ({
-    label,
     className = '',
 }) => {
     const avalanchesQuery = useAvalanchesQuery();
@@ -61,7 +59,7 @@ export const CauseFilter: React.FC<CauseFilterProps> = ({
         <div className={classNames('dropdown-filter', className)}>
             <CheckmarkDropdown
                 onChange={handleCauseChange}
-                label={label}
+                label="Cause"
                 width="300px"
                 options={availableCauseOptions}
                 selectedOptions={availableCauseOptions}

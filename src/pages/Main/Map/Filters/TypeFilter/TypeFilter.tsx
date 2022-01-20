@@ -10,12 +10,10 @@ import {useAvailableOptions} from '../../../../../utilities/customHooks/useAvail
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 
 export interface TypeFilterProps {
-    label?: string;
     className?: string;
 }
 
 export const TypeFilter: React.FC<TypeFilterProps> = ({
-    label,
     className = '',
 }) => {
     const avalanchesQuery = useAvalanchesQuery();
@@ -61,7 +59,7 @@ export const TypeFilter: React.FC<TypeFilterProps> = ({
         <div className={classNames('dropdown-filter', className)}>
             <CheckmarkDropdown
                 onChange={handleTypeChange}
-                label={label}
+                label="Type"
                 width="300px"
                 options={availableTypeOptions}
                 selectedOptions={availableTypeOptions}

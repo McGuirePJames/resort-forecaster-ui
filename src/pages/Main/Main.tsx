@@ -19,13 +19,18 @@ export const Main: React.FC = () => {
         cause: [],
         depth: {
             includeUnknowns: false,
-            minAvalancheDepth: 1,
-            maxAvalancheDepth: 100,
+            minValue: 1,
+            maxValue: 100,
+        },
+        width: {
+            includeUnknowns: false,
+            minValue: 1,
+            maxValue: 100,
         },
         elevation: {
             includeUnknowns: false,
-            minAvalancheElevation: 1,
-            maxAvalancheElevation: 100,
+            minValue: 1,
+            maxValue: 100,
         },
     });
 
@@ -64,7 +69,8 @@ export const Main: React.FC = () => {
             filters?.type &&
             filters?.cause &&
             filters?.depth &&
-            filters?.elevation
+            filters?.elevation &&
+            filters?.width
         ) {
             const avalanches = avalanchesQuery.data.avalanches as Avalanche[];
             const filteredAvalanches = avalanches.filter(avalanche => {
@@ -73,20 +79,21 @@ export const Main: React.FC = () => {
                     filters.cause!.includes(avalanche?.cause ?? '') &&
                     filters.type!.includes(avalanche?.type ?? '') &&
                     ((!avalanche.depth && filters.depth.includeUnknowns) ||
-                        ((avalanche.depth ?? -1) >=
-                            filters.depth.minAvalancheDepth &&
+                        ((avalanche.depth ?? -1) >= filters.depth.minValue &&
                             (avalanche.depth ?? 99999) <=
-                                filters.depth.maxAvalancheDepth)) &&
+                                filters.depth.maxValue)) &&
+                    ((!avalanche.width && filters.width.includeUnknowns) ||
+                        ((avalanche.width ?? -1) >= filters.width.minValue &&
+                            (avalanche.width ?? 99999) <=
+                                filters.width.maxValue)) &&
                     ((!avalanche.elevation &&
                         filters.elevation.includeUnknowns) ||
                         ((avalanche.elevation ?? -1) >=
-                            filters.elevation.minAvalancheElevation &&
+                            filters.elevation.minValue &&
                             (avalanche.elevation ?? 99999) <=
-                                filters.elevation.maxAvalancheElevation))
+                                filters.elevation.maxValue))
                 );
             });
-
-            console.log(filteredAvalanches.length);
 
             const markers = mapMarkers(filteredAvalanches);
 
@@ -102,16 +109,7 @@ export const Main: React.FC = () => {
         <main>
             <AvalancheContext.Provider
                 value={{
-                    filters: filters ?? {
-                        cause: [],
-                        aspect: [],
-                        type: [],
-                        depth: {
-                            includeUnknownDepths: false,
-                            minAvalancheDepth: 1,
-                            maxAvalancheDepth: 100,
-                        },
-                    },
+                    filters,
                     setFilters: (filterKey: string, filterValue: any) =>
                         handleSetFilters(filterKey, filterValue),
                 }}

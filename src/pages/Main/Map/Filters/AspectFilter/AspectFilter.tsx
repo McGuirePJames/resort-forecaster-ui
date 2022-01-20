@@ -10,14 +10,10 @@ import {useAvailableOptions} from '../../../../../utilities/customHooks/useAvail
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 
 export interface AspectFilterProps {
-    label?: string;
     className?: string;
 }
 
-export const AspectFilter: React.FC<AspectFilterProps> = ({
-    label,
-    className = '',
-}) => {
+export const AspectFilter: React.FC<AspectFilterProps> = ({className = ''}) => {
     const avalanchesQuery = useAvalanchesQuery();
 
     const [availableAspectOptions, setAvailableAspectOptions] = useState<
@@ -61,7 +57,7 @@ export const AspectFilter: React.FC<AspectFilterProps> = ({
         <div className={classNames('dropdown-filter', className)}>
             <CheckmarkDropdown
                 onChange={handleAspectChange}
-                label={label}
+                label="Aspect"
                 width="300px"
                 options={availableAspectOptions}
                 selectedOptions={availableAspectOptions}
