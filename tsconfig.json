@@ -16,14 +16,15 @@
         "lib": ["DOM"],
         "types": [
             "googlemaps"
-        ]
+        ],
+        "suppressImplicitAnyIndexErrors": true,
     },
     "exclude": ["src/graphql/types.ts"],
     "include": [
         "src/**/*.ts",
         "test/**/*.ts",
         "src/global.d.ts",
-        "src/components/NavBar/NavBar.tsx",
+        "src/components/NavBarOld/NavBar.tsx",
         "src/layout/index.tsx"
     ],
     "lib": [

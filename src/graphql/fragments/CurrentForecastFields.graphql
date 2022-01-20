@@ -1,7 +1,7 @@
 fragment CurrentForecastFields on CurrentForecast {
     clouds
     dewPoint
-    feelsLIke
+    feelsLike
     humidity
     pressure
     sunrise

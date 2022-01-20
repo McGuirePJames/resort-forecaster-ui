@@ -1,0 +1,15 @@
+@import '../../../../sass/utilities/variables';
+
+.filters {
+    --filter-pading: 2rem;
+
+    height: calc(100% - calc(var(--filter-pading) * 2));
+    background-color: $color-gray;
+    padding: var(--filter-pading);
+
+    &__filter {
+        &:not(:first-child) {
+            margin-top: 1rem;
+        }
+    }
+}

@@ -4,26 +4,28 @@ schema {
 
 type Query {
     skiResorts: [SkiResort]
-    forecast(skiResortId: String!): Forecast
+    weatherForecast(skiResortId: String!): WeatherForecast
+    avalanches: [Avalanche]
 }
 
 type SkiResort {
-    skiResortId: String!
+    id: String!
     name: String
     description: String
     imageUrl: String
     latitude: Float
     longitude: Float
+    weatherForecast: WeatherForecast
 }
 
-type Forecast {
+type WeatherForecast {
     currentForecast: CurrentForecast
 }
 
 type CurrentForecast {
     clouds: Float
     dewPoint: Float
-    feelsLIke: Float
+    feelsLike: Float
     humidity: Float
     pressure: Float
     sunrise: Float
@@ -34,4 +36,17 @@ type CurrentForecast {
     windDeg: Float
     windGust: Float
     windSpeed: Float
+}
+
+type Avalanche {
+    id: String!
+    externalId: String!
+    latitude: Float
+    longitude: Float
+    elevation: Int
+    aspect: String
+    type: String
+    cause: String
+    depth: Int
+    width: Int
 }

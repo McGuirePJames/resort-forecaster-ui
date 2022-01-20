@@ -1,34 +1,22 @@
-import { createTheme, ThemeProvider } from '@material-ui/core';
-import NavBar from '../components/NavBar';
-import { Main as MainPage } from '../pages/Main';
-import Footer from '../components/Footer';
+import {ThemeProvider} from '@material-ui/core';
+import {Main as MainPage} from '../pages/Main';
 import './App.scss';
-import { colorPrimary, colorSecondary } from '../constants/theme';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import theme from '../constants/theme';
+import { Footer } from './Footer';
+import { NavBar } from './NavBar';
 
 export const App = () => {
-    const theme = createTheme({
-        palette: {
-            primary: {
-                main: colorPrimary,
-            },
-            secondary: {
-                main: colorSecondary,
-            },
-        },
-    });
-
-
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
-              staleTime: 30000,
-              retry: false,
-              refetchIntervalInBackground: false,
-              refetchOnWindowFocus: false,
-              refetchOnMount: false,
+                staleTime: 30000,
+                retry: false,
+                refetchIntervalInBackground: false,
+                refetchOnWindowFocus: false,
+                refetchOnMount: false,
             },
-          },
+        },
     });
 
     return (

@@ -16,7 +16,7 @@ export type CurrentForecast = {
   __typename?: 'CurrentForecast';
   Clouds?: Maybe<Scalars['Float']>;
   DewPoint?: Maybe<Scalars['Float']>;
-  FeelsLIke?: Maybe<Scalars['Float']>;
+  FeelsLike?: Maybe<Scalars['Float']>;
   Humidity?: Maybe<Scalars['Float']>;
   Pressure?: Maybe<Scalars['Float']>;
   Sunrise?: Maybe<Scalars['Float']>;

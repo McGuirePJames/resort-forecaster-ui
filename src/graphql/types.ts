@@ -15,11 +15,25 @@ export type Scalars = {
   Float: number;
 };
 
+export type Avalanche = {
+  __typename?: 'Avalanche';
+  aspect?: Maybe<Scalars['String']>;
+  cause?: Maybe<Scalars['String']>;
+  depth?: Maybe<Scalars['Int']>;
+  elevation?: Maybe<Scalars['Int']>;
+  externalId: Scalars['String'];
+  id: Scalars['String'];
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+  type?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['Int']>;
+};
+
 export type CurrentForecast = {
   __typename?: 'CurrentForecast';
   clouds?: Maybe<Scalars['Float']>;
   dewPoint?: Maybe<Scalars['Float']>;
-  feelsLIke?: Maybe<Scalars['Float']>;
+  feelsLike?: Maybe<Scalars['Float']>;
   humidity?: Maybe<Scalars['Float']>;
   pressure?: Maybe<Scalars['Float']>;
   sunrise?: Maybe<Scalars['Float']>;
@@ -32,53 +46,76 @@ export type CurrentForecast = {
   windSpeed?: Maybe<Scalars['Float']>;
 };
 
-export type Forecast = {
-  __typename?: 'Forecast';
-  currentForecast?: Maybe<CurrentForecast>;
-};
-
 export type Query = {
   __typename?: 'Query';
-  forecast?: Maybe<Forecast>;
+  avalanches?: Maybe<Array<Maybe<Avalanche>>>;
   skiResorts?: Maybe<Array<Maybe<SkiResort>>>;
+  weatherForecast?: Maybe<WeatherForecast>;
 };
 
 
-export type QueryForecastArgs = {
+export type QueryWeatherForecastArgs = {
   skiResortId: Scalars['String'];
 };
 
 export type SkiResort = {
   __typename?: 'SkiResort';
   description?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
   imageUrl?: Maybe<Scalars['String']>;
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
-  skiResortId: Scalars['String'];
+  weatherForecast?: Maybe<WeatherForecast>;
 };
 
-export type CurrentForecastFieldsFragment = { __typename?: 'CurrentForecast', clouds?: number | null | undefined, dewPoint?: number | null | undefined, feelsLIke?: number | null | undefined, humidity?: number | null | undefined, pressure?: number | null | undefined, sunrise?: number | null | undefined, sunset?: number | null | undefined, temp?: number | null | undefined, uVI?: number | null | undefined, visibility?: number | null | undefined, windDeg?: number | null | undefined, windGust?: number | null | undefined, windSpeed?: number | null | undefined };
+export type WeatherForecast = {
+  __typename?: 'WeatherForecast';
+  currentForecast?: Maybe<CurrentForecast>;
+};
 
-export type SkiResortFieldsFragment = { __typename?: 'SkiResort', skiResortId: string, name?: string | null | undefined, description?: string | null | undefined, imageUrl?: string | null | undefined, latitude?: number | null | undefined, longitude?: number | null | undefined };
+export type AvalanceFieldsFragment = { __typename?: 'Avalanche', id: string, externalId: string, latitude?: number | null | undefined, longitude?: number | null | undefined, elevation?: number | null | undefined, aspect?: string | null | undefined, type?: string | null | undefined, cause?: string | null | undefined, depth?: number | null | undefined, width?: number | null | undefined };
+
+export type CurrentForecastFieldsFragment = { __typename?: 'CurrentForecast', clouds?: number | null | undefined, dewPoint?: number | null | undefined, feelsLike?: number | null | undefined, humidity?: number | null | undefined, pressure?: number | null | undefined, sunrise?: number | null | undefined, sunset?: number | null | undefined, temp?: number | null | undefined, uVI?: number | null | undefined, visibility?: number | null | undefined, windDeg?: number | null | undefined, windGust?: number | null | undefined, windSpeed?: number | null | undefined };
+
+export type SkiResortFieldsFragment = { __typename?: 'SkiResort', id: string, name?: string | null | undefined, description?: string | null | undefined, imageUrl?: string | null | undefined, latitude?: number | null | undefined, longitude?: number | null | undefined };
+
+export type GetAvalanchesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAvalanchesQuery = { __typename?: 'Query', avalanches?: Array<{ __typename?: 'Avalanche', id: string, externalId: string, latitude?: number | null | undefined, longitude?: number | null | undefined, elevation?: number | null | undefined, aspect?: string | null | undefined, type?: string | null | undefined, cause?: string | null | undefined, depth?: number | null | undefined, width?: number | null | undefined } | null | undefined> | null | undefined };
 
 export type GetForecastQueryVariables = Exact<{
   skiResortId: Scalars['String'];
 }>;
 
 
-export type GetForecastQuery = { __typename?: 'Query', forecast?: { __typename?: 'Forecast', currentForecast?: { __typename?: 'CurrentForecast', clouds?: number | null | undefined, dewPoint?: number | null | undefined, feelsLIke?: number | null | undefined, humidity?: number | null | undefined, pressure?: number | null | undefined, sunrise?: number | null | undefined, sunset?: number | null | undefined, temp?: number | null | undefined, uVI?: number | null | undefined, visibility?: number | null | undefined, windDeg?: number | null | undefined, windGust?: number | null | undefined, windSpeed?: number | null | undefined } | null | undefined } | null | undefined };
+export type GetForecastQuery = { __typename?: 'Query', weatherForecast?: { __typename?: 'WeatherForecast', currentForecast?: { __typename?: 'CurrentForecast', clouds?: number | null | undefined, dewPoint?: number | null | undefined, feelsLike?: number | null | undefined, humidity?: number | null | undefined, pressure?: number | null | undefined, sunrise?: number | null | undefined, sunset?: number | null | undefined, temp?: number | null | undefined, uVI?: number | null | undefined, visibility?: number | null | undefined, windDeg?: number | null | undefined, windGust?: number | null | undefined, windSpeed?: number | null | undefined } | null | undefined } | null | undefined };
 
 export type GetSkiResortsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSkiResortsQuery = { __typename?: 'Query', skiResorts?: Array<{ __typename?: 'SkiResort', skiResortId: string, name?: string | null | undefined, description?: string | null | undefined, imageUrl?: string | null | undefined, latitude?: number | null | undefined, longitude?: number | null | undefined } | null | undefined> | null | undefined };
+export type GetSkiResortsQuery = { __typename?: 'Query', skiResorts?: Array<{ __typename?: 'SkiResort', id: string, name?: string | null | undefined, description?: string | null | undefined, imageUrl?: string | null | undefined, latitude?: number | null | undefined, longitude?: number | null | undefined, weatherForecast?: { __typename?: 'WeatherForecast', currentForecast?: { __typename?: 'CurrentForecast', clouds?: number | null | undefined, dewPoint?: number | null | undefined, feelsLike?: number | null | undefined, humidity?: number | null | undefined, pressure?: number | null | undefined, sunrise?: number | null | undefined, sunset?: number | null | undefined, temp?: number | null | undefined, uVI?: number | null | undefined, visibility?: number | null | undefined, windDeg?: number | null | undefined, windGust?: number | null | undefined, windSpeed?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined> | null | undefined };
 
+export const AvalanceFieldsFragmentDoc = gql`
+    fragment AvalanceFields on Avalanche {
+  id
+  externalId
+  latitude
+  longitude
+  elevation
+  aspect
+  type
+  cause
+  depth
+  width
+}
+    `;
 export const CurrentForecastFieldsFragmentDoc = gql`
     fragment CurrentForecastFields on CurrentForecast {
   clouds
   dewPoint
-  feelsLIke
+  feelsLike
   humidity
   pressure
   sunrise
@@ -93,7 +130,7 @@ export const CurrentForecastFieldsFragmentDoc = gql`
     `;
 export const SkiResortFieldsFragmentDoc = gql`
     fragment SkiResortFields on SkiResort {
-  skiResortId
+  id
   name
   description
   imageUrl
@@ -101,9 +138,16 @@ export const SkiResortFieldsFragmentDoc = gql`
   longitude
 }
     `;
+export const GetAvalanchesDocument = gql`
+    query GetAvalanches {
+  avalanches {
+    ...AvalanceFields
+  }
+}
+    ${AvalanceFieldsFragmentDoc}`;
 export const GetForecastDocument = gql`
     query GetForecast($skiResortId: String!) {
-  forecast(skiResortId: $skiResortId) {
+  weatherForecast(skiResortId: $skiResortId) {
     currentForecast {
       ...CurrentForecastFields
     }
@@ -114,9 +158,15 @@ export const GetSkiResortsDocument = gql`
     query GetSkiResorts {
   skiResorts {
     ...SkiResortFields
+    weatherForecast {
+      currentForecast {
+        ...CurrentForecastFields
+      }
+    }
   }
 }
-    ${SkiResortFieldsFragmentDoc}`;
+    ${SkiResortFieldsFragmentDoc}
+${CurrentForecastFieldsFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
 
@@ -125,6 +175,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetAvalanches(variables?: GetAvalanchesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetAvalanchesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAvalanchesQuery>(GetAvalanchesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAvalanches');
+    },
     GetForecast(variables: GetForecastQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetForecastQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetForecastQuery>(GetForecastDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetForecast');
     },

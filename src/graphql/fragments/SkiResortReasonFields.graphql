@@ -1,5 +1,5 @@
 fragment SkiResortFields on SkiResort {
-    skiResortId
+    id,
     name
     description
     imageUrl

@@ -1,5 +1,10 @@
 query GetSkiResorts {
     skiResorts {
         ...SkiResortFields
+        weatherForecast {
+            currentForecast {
+                ...CurrentForecastFields
+            }
+        }
     }
 }

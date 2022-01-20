@@ -1,0 +1,12 @@
+fragment AvalanceFields on Avalanche {
+    id
+    externalId
+    latitude
+    longitude
+    elevation
+    aspect
+    type
+    cause
+    depth
+    width
+}

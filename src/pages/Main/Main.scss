@@ -1,7 +1,24 @@
 main {
-    padding: 0 10%;
+    .carousel-container {
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-    > * {
-        margin-top: 30px;
+    .map-container {
+        width: 100vw;
+        height: 1000px;
+        display: flex;
+
+        &__filter {
+            min-width: 450px;
+            max-width: 450px;
+            width: 450px;
+        }
+
+        &__map {
+            width: 100%;
+        }
     }
 }

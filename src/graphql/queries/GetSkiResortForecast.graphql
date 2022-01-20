@@ -1,5 +1,5 @@
 query GetForecast($skiResortId: String!) {
-    forecast(skiResortId: $skiResortId) {
+    weatherForecast(skiResortId: $skiResortId) {
         currentForecast {
             ...CurrentForecastFields
         }
