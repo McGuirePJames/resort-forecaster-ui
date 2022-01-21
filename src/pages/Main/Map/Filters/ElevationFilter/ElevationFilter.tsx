@@ -4,19 +4,21 @@ import {AvalancheContext} from '../../../../../context/avalancheContext';
 import {useEffect} from 'react';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
-import { useAvalanchesQuery } from '../../../../../utilities/customHooks/useAvalanchesQuery';
-import { RangeSlider } from '../../../../../components/Inputs/RangeSlider';
+import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
+import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
 
 export interface ElevationFilterProps {
     className?: string;
 }
 
-export const ElevationFilter: React.FC<ElevationFilterProps> = ({className = ''}) => {
+export const ElevationFilter: React.FC<ElevationFilterProps> = ({
+    className = '',
+}) => {
     const avalanchesQuery = useAvalanchesQuery();
 
-    const [avalancheElevationRange, setAvalancheElevationRange] = useState<number[]>(
-        []
-    );
+    const [avalancheElevationRange, setAvalancheElevationRange] = useState<
+        number[]
+    >([]);
 
     const avalancheContext = useContext(AvalancheContext);
 
@@ -24,7 +26,9 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({className = ''}
         const avalanches = avalanchesQuery.data?.avalanches;
 
         if (avalanches) {
-            const avalancheElevations = avalanches.map(x => x.elevation ?? 0) ?? [];
+            const avalancheElevations =
+                avalanches.map(x => x.elevation ?? 0)?.filter(x => x !== 0) ?? [];
+
             const minAvalancheElevation = Math.min(...avalancheElevations);
             const maxAvalancheElevation = Math.max(...avalancheElevations);
             const elevationRange = [
@@ -65,6 +69,7 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({className = ''}
             onSliderChange={handleElevationChange}
             onCheckboxChange={handleElevationCheckboxChange}
             label={'Elevation'}
+            checkboxLabel="Include Unknown Elevations"
         />
     );
 };

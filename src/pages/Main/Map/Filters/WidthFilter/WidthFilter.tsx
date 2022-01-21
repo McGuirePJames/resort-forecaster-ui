@@ -64,7 +64,8 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({className = ''}) => {
             maxValue={avalancheWidthRange[1]}
             onSliderChange={handleWidthChange}
             onCheckboxChange={handleWidthCheckboxChange}
-            label={'Width'}
+            label={'Width (in feet)'}
+            checkboxLabel='Include Unknown Widths?'
         />
     );
 };

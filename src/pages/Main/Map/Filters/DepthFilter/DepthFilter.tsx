@@ -63,7 +63,8 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
             maxValue={avalancheDepthRange[1]}
             onSliderChange={handleDepthChange}
             onCheckboxChange={handleDepthCheckboxChange}
-            label={'Depth'}
+            label={'Depth (in inches)'}
+            checkboxLabel={'Include Unknown Depths'}
         />
     );
 };

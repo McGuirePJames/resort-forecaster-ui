@@ -15,6 +15,7 @@ export interface RangeSliderProps {
     onCheckboxChange?: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
     className?: string;
     label: string;
+    checkboxLabel: string;
 }
 
 export const RangeSlider: React.FC<RangeSliderProps> = ({
@@ -24,6 +25,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
     onCheckboxChange = () => {},
     className = '',
     label = '',
+    checkboxLabel = '',
 }) => {
     const [range, setRange] = useState<number | number[]>([]);
 
@@ -48,7 +50,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
             <FormGroup>
                 <FormControlLabel
                     control={<Checkbox onChange={handleCheckboxChange}/>}
-                    label={`Include Unknown ${label}s?`}
+                    label={checkboxLabel}
                 />
             </FormGroup>
             <Slider
