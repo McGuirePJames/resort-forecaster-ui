@@ -1,14 +1,21 @@
-import {useEffect, useState} from 'react';
-import {AvalancheMarker} from '../../../../models/Marker';
+import {useEffect, useRef, useState} from 'react';
 import './AvalancheMap.scss';
-import ReactMapGL, {Source} from 'react-map-gl';
-import { AvalancheMapLayers } from '../MapLayers';
+import ReactMapGL, {MapEvent, MapRef, Source} from 'react-map-gl';
+import {AvalancheMapLayers} from '../MapLayers';
+import {Avalanche} from '../../../../graphql/types';
 
 export interface AvalancheMapProps {
-    markers?: AvalancheMarker[];
+    avalanches: Avalanche[];
+    onMapClick?: (mapEvent: MapEvent) => void;
+    onHover?: (mapEvent: MapEvent) => void;
 }
 
-export const AvalancheMap: React.FC<AvalancheMapProps> = ({markers}) => {
+export const AvalancheMap: React.FC<AvalancheMapProps> = ({
+    avalanches,
+    onMapClick,
+    onHover,
+}) => {
+    const mapRef = useRef<MapRef>(null);
     const [markersGeoCollection, setMarkersGeoCollection] =
         useState<GeoJSON.FeatureCollection<GeoJSON.Geometry>>();
     const [viewport, setViewport] = useState({
@@ -23,32 +30,41 @@ export const AvalancheMap: React.FC<AvalancheMapProps> = ({markers}) => {
     };
 
     useEffect(() => {
-        const markerGeoCollection: GeoJSON.FeatureCollection<GeoJSON.Geometry> =
-            {
-                type: 'FeatureCollection',
-                features: (markers ?? []).map(x => {
-                    return {
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
-                            coordinates: [
-                                x.latLng.longitude,
-                                x.latLng.latitude,
-                            ],
-                        },
-                        id: '',
-                        properties: [],
-                    };
-                }),
-            };
+        if (avalanches?.length > 0) {
+            const markerGeoCollection: GeoJSON.FeatureCollection<GeoJSON.Geometry> =
+                {
+                    type: 'FeatureCollection',
+                    features: (avalanches ?? []).map(avalanche => {
+                        return {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [
+                                    avalanche.longitude ?? 0,
+                                    avalanche.latitude ?? 0,
+                                ],
+                            },
+                            id: '',
+                            properties: {...avalanche},
+                        };
+                    }),
+                };
 
-        setMarkersGeoCollection(markerGeoCollection);
-    }, [markers]);
+            setMarkersGeoCollection(markerGeoCollection);
+        }
+    }, [avalanches]);
+
+    const handleMapClick = (event: MapEvent) => {
+        if (onMapClick) {
+            onMapClick(event);
+        }
+    };
 
     const renderMap = () => {
         return (
             <ReactMapGL
                 {...viewport}
+                className="avalanche-map"
                 mapboxApiAccessToken="pk.eyJ1IjoibWNndWlyZXBqYW1lcyIsImEiOiJja3lmOHh6bTIxZzlnMm9wOGpjeXUyaGY0In0.mzd-urjwavbFrfdYhoof-Q"
                 mapStyle={
                     'mapbox://styles/mcguirepjames/ckyfcotl30wjv14le5ij9xsqt'
@@ -58,7 +74,10 @@ export const AvalancheMap: React.FC<AvalancheMapProps> = ({markers}) => {
                 onLoad={event => {
                     event.target;
                 }}
+                ref={mapRef}
                 onViewportChange={setViewport}
+                onClick={handleMapClick}
+                onHover={onHover}
             >
                 <Source
                     id="avalanches"

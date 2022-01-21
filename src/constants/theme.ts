@@ -9,6 +9,15 @@ export const theme = createTheme({
         secondary: {
             main: colorSecondary,
         },
+        action: {
+            active: colorSecondary,
+            hover: colorSecondary,
+            hoverOpacity: 0.7,
+            focus: colorSecondary,
+            focusOpacity: 1,
+            selected: colorSecondary,
+            selectedOpacity: 1,
+        },
     },
 });
 

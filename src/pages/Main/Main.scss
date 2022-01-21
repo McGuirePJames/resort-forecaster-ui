@@ -10,6 +10,7 @@ main {
         width: 100vw;
         height: 1000px;
         display: flex;
+        position: relative;
 
         &__filter {
             min-width: 450px;
@@ -19,6 +20,22 @@ main {
 
         &__map {
             width: 100%;
+
+            &--pointer {
+                > div {
+                    > div {
+                        cursor: pointer !important;
+                    }
+                }
+            }
+        }
+
+        &__overlay {
+            min-height: 100px;
+            width: 250px;
+            position: absolute;
+            top: 30px;
+            right: 50px;
         }
     }
 }

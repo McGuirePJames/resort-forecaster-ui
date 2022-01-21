@@ -9,6 +9,7 @@ import WidthFilter from './WidthFilter';
 export const Filters: React.FC = () => {
     return (
         <div className="filters">
+            <span>Don't forget to add a collapse arrow</span>
             <AspectFilter className="filters__filter" />
             <CauseFilter className="filters__filter" />
             <TypeFilter className="filters__filter" />

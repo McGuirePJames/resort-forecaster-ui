@@ -1,0 +1,44 @@
+@import '../../../../sass/utilities/variables.scss';
+
+.avalanche-info-overlay {
+    height: inherit;
+    width: inherit;
+    padding: 1.5rem;
+    z-index: 2;
+    background-color: $color-white;
+    border-radius: 3px;
+    box-sizing: border-box;
+
+    &__close-icon-row {
+        display: flex;
+
+        > svg {
+            margin-left: auto;
+            cursor: pointer;
+            font-size: 21pt;
+        }
+    }
+
+    &__title {
+        font-weight: 800;
+        font-size: 1.65rem;
+    }
+
+    &__data {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &::first-letter {
+            text-transform: uppercase;
+        }
+
+        &:not(:first-child) {
+            margin-top: 1rem;
+        }
+
+        &--bold {
+            font-weight: 700;
+        }
+    }
+}

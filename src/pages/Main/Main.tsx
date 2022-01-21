@@ -1,18 +1,25 @@
 import './Main.scss';
 import {CircularProgress} from '@material-ui/core';
 import {useEffect, useState} from 'react';
-import {AvalancheMarker} from '../../models/Marker';
 import {Avalanche} from '../../graphql/types';
 import {Filters as FiltersType} from '../../context/avalancheContext';
 import {AvalancheContext} from '../../context/avalancheContext';
 import {AvalancheMap} from './Map/AvalancheMap';
 import {Filters} from './Map/Filters';
 import {useAvalanchesQuery} from '../../utilities/customHooks/useAvalanchesQuery';
+import AvalancheInfoOverlay from './Map/AvalancheInfoOverlay';
+import {MapEvent} from 'react-map-gl';
+import classNames from 'classnames';
+import debounce from 'lodash.debounce';
 
 export const Main: React.FC = () => {
     const avalanchesQuery = useAvalanchesQuery();
 
-    const [markers, setMarkers] = useState<AvalancheMarker[]>([]);
+    const [filteredAvalanches, setFilteredAvalanches] = useState<Avalanche[]>(
+        []
+    );
+    const [isHoveringOnUnclusteredPoint, setIsHoveringOnUnclusteredPoint] =
+        useState<boolean>(false);
     const [filters, setFilters] = useState<FiltersType>({
         aspect: [],
         type: [],
@@ -33,6 +40,7 @@ export const Main: React.FC = () => {
             maxValue: 100,
         },
     });
+    const [selectedAvalanche, setSelectedAvalanche] = useState<Avalanche>();
 
     const handleSetFilters = (filterKey: string, filterValue: any) => {
         const currentFilter = filters;
@@ -42,24 +50,12 @@ export const Main: React.FC = () => {
         setFilters({...currentFilter});
     };
 
-    const mapMarkers = (avalancheData: Avalanche[]) => {
+    const getAvalanchesWithLatLng = (avalancheData: Avalanche[]) => {
         const avalanchesWithLatLng = avalancheData.filter(
             x => x?.latitude && x?.longitude
         );
 
-        const avalancheMarkers = avalanchesWithLatLng.map(x => {
-            const marker: AvalancheMarker = {
-                latLng: {
-                    latitude: x!.latitude!,
-                    longitude: x!.longitude!,
-                },
-                externalLink: `https://utahavalanchecenter.org/avalanches/${x?.externalId}`,
-            };
-
-            return marker;
-        });
-
-        return avalancheMarkers;
+        return avalanchesWithLatLng;
     };
 
     useEffect(() => {
@@ -95,15 +91,41 @@ export const Main: React.FC = () => {
                 );
             });
 
-            const markers = mapMarkers(filteredAvalanches);
+            const markers = getAvalanchesWithLatLng(filteredAvalanches);
 
-            setMarkers(markers);
+            setFilteredAvalanches(markers);
         }
     }, [filters]);
 
     const renderLoader = () => {
         return <CircularProgress size={80} />;
     };
+
+    const handleMapClick = (mapEvent: MapEvent) => {
+        if (mapEvent?.features?.[0]?.properties) {
+            const properties = mapEvent.features[0].properties;
+
+            if (!properties.cluster) {
+                const avalanche = mapEvent.features[0]?.properties as Avalanche;
+
+                setSelectedAvalanche(avalanche);
+            }
+        }
+    };
+
+    const handleOnHover = debounce(event => {
+        const featureId = event?.features?.[0]?.layer?.id;
+
+        if (featureId && featureId === 'unclustered-point') {
+            setIsHoveringOnUnclusteredPoint(true);
+        } else {
+            setIsHoveringOnUnclusteredPoint(false);
+        }
+    }, 1);
+
+    const handleOnInfoOverlayClose = () => {
+        setSelectedAvalanche(undefined);
+    }
 
     return (
         <main>
@@ -118,9 +140,25 @@ export const Main: React.FC = () => {
                     <div className="map-container__filter">
                         <Filters />
                     </div>
-                    <div className="map-container__map">
-                        <AvalancheMap markers={markers} />
+                    <div
+                        className={classNames('map-container__map', {
+                            'map-container__map--pointer': isHoveringOnUnclusteredPoint,
+                        })}
+                    >
+                        <AvalancheMap
+                            avalanches={filteredAvalanches}
+                            onMapClick={handleMapClick}
+                            onHover={handleOnHover}
+                        />
                     </div>
+                    {selectedAvalanche && (
+                        <div className="map-container__overlay">
+                            <AvalancheInfoOverlay
+                                avalanche={selectedAvalanche}
+                                onClose={handleOnInfoOverlayClose}
+                            />
+                        </div>
+                    )}
                 </div>
             </AvalancheContext.Provider>
         </main>

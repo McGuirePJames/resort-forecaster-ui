@@ -1,4 +1,4 @@
-export const colorPrimary = '#05202b';
+export const colorPrimary = '#0b5370';
 export const colorPrimaryLight = '#8dabba';
 export const colorPrimaryDark = '#33505d';
 
@@ -15,3 +15,4 @@ export const colorOrange = '#FF7D4B';
 export const colorAqua = '#54C3BC';
 export const colorMagenta = '#E44A92';
 export const colorWhite = '#fff';
+export const colorNavy = '#05202b';
