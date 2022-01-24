@@ -1,5 +1,5 @@
 import './Main.scss';
-import {CircularProgress} from '@material-ui/core';
+import {CircularProgress} from '@mui/material';
 import {useEffect, useState} from 'react';
 import {Avalanche} from '../../graphql/types';
 import {Filters as FiltersType} from '../../context/avalancheContext';
@@ -125,7 +125,7 @@ export const Main: React.FC = () => {
 
     const handleOnInfoOverlayClose = () => {
         setSelectedAvalanche(undefined);
-    }
+    };
 
     return (
         <main>
@@ -138,11 +138,12 @@ export const Main: React.FC = () => {
             >
                 <div className="map-container">
                     <div className="map-container__filter">
-                        <Filters />
+                        <Filters filteredAvalanches={filteredAvalanches}/>
                     </div>
                     <div
                         className={classNames('map-container__map', {
-                            'map-container__map--pointer': isHoveringOnUnclusteredPoint,
+                            'map-container__map--pointer':
+                                isHoveringOnUnclusteredPoint,
                         })}
                     >
                         <AvalancheMap

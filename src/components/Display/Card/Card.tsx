@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Card as MaterialUiCard, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from '@material-ui/core';
+import { Card as MaterialUiCard, CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from '@mui/material';
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import './Card.scss';
 

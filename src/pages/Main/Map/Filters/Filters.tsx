@@ -5,17 +5,22 @@ import {AspectFilter} from './AspectFilter';
 import {CauseFilter} from './CauseFilter';
 import ElevationFilter from './ElevationFilter';
 import WidthFilter from './WidthFilter';
+import {Avalanche} from '../../../../graphql/types';
 
-export const Filters: React.FC = () => {
+export interface FiltersProps {
+    filteredAvalanches: Avalanche[];
+}
+
+export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
     return (
         <div className="filters">
             <span>Don't forget to add a collapse arrow</span>
-            <AspectFilter className="filters__filter" />
-            <CauseFilter className="filters__filter" />
-            <TypeFilter className="filters__filter" />
-            <DepthFilter className="filters__filter" />
-            <WidthFilter className="filters__filter" />
-            <ElevationFilter className="filters__filter" />
+            <AspectFilter />
+            <CauseFilter />
+            <TypeFilter />
+            <DepthFilter filteredAvalanches={filteredAvalanches} />
+            <WidthFilter filteredAvalanches={filteredAvalanches} />
+            <ElevationFilter filteredAvalanches={filteredAvalanches} />
         </div>
     );
 };

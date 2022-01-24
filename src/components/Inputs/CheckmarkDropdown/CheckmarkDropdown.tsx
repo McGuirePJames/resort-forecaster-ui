@@ -1,13 +1,5 @@
-import {
-    Checkbox,
-    FormControl,
-    InputLabel,
-    ListItemText,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    SelectChangeEvent,
-} from '@material-ui/core';
+
+import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import './CheckmarkDropdown.scss';
 
@@ -60,7 +52,9 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
     return (
         <div className="checkmark-dropdown">
             <FormControl sx={{m: 1, width}} size={'medium'}>
-                <InputLabel id="checkmark-dropdownlabel">
+                <InputLabel
+                    id="checkmark-dropdownlabel"
+                >
                     {label}
                 </InputLabel>
                 <Select
@@ -82,13 +76,19 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
                     }}
                 >
                     {options?.map((option, i) => (
-                        <MenuItem key={i} value={option.key}>
+                        <MenuItem
+                            key={i}
+                            value={option.key}
+                        >
                             <Checkbox
                                 checked={selectedOptionIds
                                     .map(x => x.key)
                                     .includes(option.key)}
                             />
-                            <ListItemText primary={option.label} />
+                            <ListItemText
+                                primary={option.label}
+
+                            />
                         </MenuItem>
                     ))}
                 </Select>

@@ -1,4 +1,4 @@
-import {BottomNavigation, useTheme} from '@material-ui/core';
+import {BottomNavigation, useTheme} from '@mui/material';
 import './Footer.scss';
 
 export const Footer = () => {

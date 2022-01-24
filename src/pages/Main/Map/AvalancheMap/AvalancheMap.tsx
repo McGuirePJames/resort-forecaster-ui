@@ -69,8 +69,8 @@ export const AvalancheMap: React.FC<AvalancheMapProps> = ({
                 mapStyle={
                     'mapbox://styles/mcguirepjames/ckyfcotl30wjv14le5ij9xsqt'
                 }
-                width="100%"
-                height="1000px"
+                width="inherit"
+                height="inherit"
                 onLoad={event => {
                     event.target;
                 }}

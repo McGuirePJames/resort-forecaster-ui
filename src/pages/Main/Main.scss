@@ -1,4 +1,6 @@
 main {
+    height: 1100px;
+
     .carousel-container {
         height: 500px;
         display: flex;
@@ -7,18 +9,21 @@ main {
     }
 
     .map-container {
+        height: inherit;
         width: 100vw;
-        height: 1000px;
         display: flex;
         position: relative;
 
         &__filter {
-            min-width: 450px;
-            max-width: 450px;
-            width: 450px;
+            --filter-width: 435px;
+            height: inherit;
+            min-width: var(--filter-width);
+            max-width: var(--filter-width);
+            width: var(--filter-width);
         }
 
         &__map {
+            height: inherit;
             width: 100%;
 
             &--pointer {

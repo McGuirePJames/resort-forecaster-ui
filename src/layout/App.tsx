@@ -1,4 +1,4 @@
-import {ThemeProvider} from '@material-ui/core';
+import {ThemeProvider} from '@mui/material';
 import {Main as MainPage} from '../pages/Main';
 import './App.scss';
 import {QueryClient, QueryClientProvider} from 'react-query';

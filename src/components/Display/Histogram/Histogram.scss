@@ -1,0 +1,30 @@
+@import '../../../sass/utilities/variables.scss';
+
+.histogram {
+    display: flex;
+    
+    &__bin {
+        position: relative;
+
+        &:not(:first-child) {
+            margin-left: 2px;
+        }
+    }
+
+
+    &__bar {
+        position: absolute;
+        width: inherit;
+        left: 2px;
+        bottom: 0;
+        background-color: orange;
+
+        &--transparent {
+            opacity: 0.35;
+        }
+    }
+
+    &__tooltip {
+
+    }
+}

@@ -4,14 +4,21 @@ import {AvalancheContext} from '../../../../../context/avalancheContext';
 import {useEffect} from 'react';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
-import { useAvalanchesQuery } from '../../../../../utilities/customHooks/useAvalanchesQuery';
-import { RangeSlider } from '../../../../../components/Inputs/RangeSlider';
+import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
+import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
+import {Histogram} from '../../../../../components/Display/Histogram';
+import {Avalanche} from '../../../../../graphql/types';
+import { depthBins } from '../../../../../constants/histogramBins';
 
 export interface DepthFilterProps {
     className?: string;
+    filteredAvalanches?: Avalanche[];
 }
 
-export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
+export const DepthFilter: React.FC<DepthFilterProps> = ({
+    className = '',
+    filteredAvalanches,
+}) => {
     const avalanchesQuery = useAvalanchesQuery();
 
     const [avalancheDepthRange, setAvalancheDepthRange] = useState<number[]>(
@@ -47,7 +54,7 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
             minValue: value[0],
             maxValue: value[1],
         });
-    }, 300);
+    }, 100);
 
     const handleDepthCheckboxChange = (_: any, isChecked: boolean) => {
         avalancheContext.setFilters('depth', {
@@ -56,8 +63,19 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
         });
     };
 
+    const renderData = () => {
+        if (filteredAvalanches?.length ?? 0 > 0) {
+            return filteredAvalanches!
+                .map(x => x.depth)
+                .filter(x => x !== undefined) as number[];
+        }
+
+        return [];
+    };
+
     return (
         <RangeSlider
+            width={350}
             className={classNames('filters__filter', className)}
             minValue={avalancheDepthRange[0]}
             maxValue={avalancheDepthRange[1]}
@@ -65,7 +83,16 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({className = ''}) => {
             onCheckboxChange={handleDepthCheckboxChange}
             label={'Depth (in inches)'}
             checkboxLabel={'Include Unknown Depths'}
-        />
+        >
+            <Histogram
+                data={renderData()}
+                histogramBins={depthBins}
+                currentRange={[
+                    avalancheContext.filters.depth.minValue,
+                    avalancheContext.filters.depth.maxValue,
+                ]}
+            />
+        </RangeSlider>
     );
 };
 

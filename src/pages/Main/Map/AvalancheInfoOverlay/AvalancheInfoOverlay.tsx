@@ -1,4 +1,4 @@
-import {Link, Paper} from '@material-ui/core';
+import {Link, Paper} from '@mui/material';
 import {Avalanche} from '../../../../graphql/types';
 import CloseIcon from '@mui/icons-material/Close';
 import './AvalancheInfoOverlay.scss';

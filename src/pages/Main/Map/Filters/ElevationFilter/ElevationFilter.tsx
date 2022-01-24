@@ -6,13 +6,19 @@ import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
+import {Avalanche} from '../../../../../graphql/types';
+import {Histogram} from '../../../../../components/Display/Histogram';
+import {HistogramBin} from '../../../../../models/HistogramBin';
+import { elevationBins } from '../../../../../constants/histogramBins';
 
 export interface ElevationFilterProps {
     className?: string;
+    filteredAvalanches?: Avalanche[];
 }
 
 export const ElevationFilter: React.FC<ElevationFilterProps> = ({
     className = '',
+    filteredAvalanches,
 }) => {
     const avalanchesQuery = useAvalanchesQuery();
 
@@ -27,7 +33,8 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
 
         if (avalanches) {
             const avalancheElevations =
-                avalanches.map(x => x.elevation ?? 0)?.filter(x => x !== 0) ?? [];
+                avalanches.map(x => x.elevation ?? 0)?.filter(x => x !== 0) ??
+                [];
 
             const minAvalancheElevation = Math.min(...avalancheElevations);
             const maxAvalancheElevation = Math.max(...avalancheElevations);
@@ -61,8 +68,19 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
         });
     };
 
+    const renderData = () => {
+        if (filteredAvalanches?.length ?? 0 > 0) {
+            return filteredAvalanches!
+                .map(x => x.elevation)
+                .filter(x => x !== undefined) as number[];
+        }
+
+        return [];
+    };
+
     return (
         <RangeSlider
+            width={350}
             className={classNames('filters__filter', className)}
             minValue={avalancheElevationRange[0]}
             maxValue={avalancheElevationRange[1]}
@@ -70,7 +88,16 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
             onCheckboxChange={handleElevationCheckboxChange}
             label={'Elevation'}
             checkboxLabel="Include Unknown Elevations"
-        />
+        >
+            <Histogram
+                data={renderData()}
+                histogramBins={elevationBins}
+                currentRange={[
+                    avalancheContext.filters.elevation.minValue,
+                    avalancheContext.filters.elevation.maxValue,
+                ]}
+            />
+        </RangeSlider>
     );
 };
 

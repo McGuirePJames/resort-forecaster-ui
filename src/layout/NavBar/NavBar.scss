@@ -1,0 +1,13 @@
+.navBar {
+    height: 80px;
+
+    > div {
+        height: inherit;
+    }
+
+    svg {
+        width: 100%;
+        height: 40px;
+        margin-right: auto;
+    }
+}

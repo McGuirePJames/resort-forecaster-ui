@@ -6,4 +6,13 @@ html {
     font-weight: 100;
     font-size: 13pt;
     background-color: $color-gray;
+
+    body, #root, .app {
+        height: inherit;
+    }
+
+    .app {
+        display: flex;
+        flex-direction: column;
+    }
 }

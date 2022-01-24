@@ -4,19 +4,27 @@ import {AvalancheContext} from '../../../../../context/avalancheContext';
 import {useEffect} from 'react';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
-import { useAvalanchesQuery } from '../../../../../utilities/customHooks/useAvalanchesQuery';
-import { RangeSlider } from '../../../../../components/Inputs/RangeSlider';
+import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
+import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
+import {Avalanche} from '../../../../../graphql/types';
+import {Histogram} from '../../../../../components/Display/Histogram';
+import {widthBins} from '../../../../../constants/histogramBins';
 
 export interface WidthFilterProps {
     className?: string;
+    filteredAvalanches?: Avalanche[];
 }
 
-export const WidthFilter: React.FC<WidthFilterProps> = ({className = ''}) => {
+export const WidthFilter: React.FC<WidthFilterProps> = ({
+    className = '',
+    filteredAvalanches,
+}) => {
     const avalanchesQuery = useAvalanchesQuery();
 
     const [avalancheWidthRange, setAvalancheWidthRange] = useState<number[]>(
         []
     );
+    const [sliderStep, setSliderStep] = useState<number>(1);
 
     const avalancheContext = useContext(AvalancheContext);
 
@@ -32,6 +40,9 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({className = ''}) => {
                 minAvalancheWidth === 0 ? 1 : minAvalancheWidth,
                 maxAvalancheWidth,
             ];
+            const stepNeededForNextBin = getStepNeededForNextBin(widthRange);
+
+            setSliderStep(stepNeededForNextBin);
 
             setAvalancheWidthRange(widthRange);
             avalancheContext.setFilters('width', {
@@ -42,7 +53,18 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({className = ''}) => {
         }
     }, [avalanchesQuery.data?.avalanches]);
 
+    const getStepNeededForNextBin = (currentSliderRange: number[]) => {
+        const currentBinIndex = widthBins.findIndex(bin => currentSliderRange[0] >= bin.start && currentSliderRange[0] <= bin.end);
+        const nextBinIndex = widthBins.length === currentBinIndex - 1 ? currentBinIndex :  currentBinIndex + 1;
+
+        return widthBins[nextBinIndex].start - widthBins[currentBinIndex].start;
+    };
+
     const handleWidthChange = debounce((event: Event, value: number[]) => {
+        const stepNeededForNextBin = getStepNeededForNextBin(value);
+
+        setSliderStep(stepNeededForNextBin);
+
         avalancheContext.setFilters('width', {
             ...avalancheContext.filters.width,
             minValue: value[0],
@@ -57,16 +79,39 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({className = ''}) => {
         });
     };
 
+    const renderData = () => {
+        if (filteredAvalanches) {
+            const result = filteredAvalanches!
+                .map(x => x.width)
+                .filter(x => x !== undefined) as number[];
+
+            return result;
+        }
+
+        return [];
+    };
+
     return (
         <RangeSlider
+            width={350}
             className={classNames('filters__filter', className)}
-            minValue={avalancheWidthRange[0]}
+            minValue={200}
             maxValue={avalancheWidthRange[1]}
+            step={sliderStep}
             onSliderChange={handleWidthChange}
             onCheckboxChange={handleWidthCheckboxChange}
             label={'Width (in feet)'}
-            checkboxLabel='Include Unknown Widths?'
-        />
+            checkboxLabel="Include Unknown Widths?"
+        >
+            <Histogram
+                data={renderData()}
+                histogramBins={widthBins}
+                currentRange={[
+                    avalancheContext.filters.depth.minValue,
+                    avalancheContext.filters.depth.maxValue,
+                ]}
+            />
+        </RangeSlider>
     );
 };
 
