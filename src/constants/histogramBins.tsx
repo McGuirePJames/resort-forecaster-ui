@@ -1,195 +1,195 @@
-import { HistogramBin } from "../models/HistogramBin";
+import {HistogramBin} from '../models/HistogramBin';
 
-const widthBinWidth = 28.5;
+const widthBinWidth = 25;
 
 export const widthBins: HistogramBin[] = [
     {
+        value: 1,
         start: 1,
-        end: 50,
+        end: 49,
         width: widthBinWidth,
     },
     {
-        start: 51,
-        end: 100,
+        value: 25,
+        start: 50,
+        end: 99,
         width: widthBinWidth,
     },
     {
-        start: 101,
-        end: 150,
+        value: 50,
+        start: 100,
+        end: 149,
         width: widthBinWidth,
     },
     {
-        start: 151,
-        end: 200,
+        value: 75,
+        start: 150,
+        end: 199,
         width: widthBinWidth,
     },
     {
-        start: 201,
-        end: 250,
+        value: 100,
+        start: 200,
+        end: 249,
         width: widthBinWidth,
     },
     {
-        start: 251,
-        end: 300,
+        value: 125,
+        start: 250,
+        end: 299,
         width: widthBinWidth,
     },
     {
-        start: 301,
-        end: 400,
+        value: 150,
+        start: 300,
+        end: 399,
         width: widthBinWidth,
     },
     {
-        start: 401,
-        end: 500,
+        value: 175,
+        start: 400,
+        end: 499,
         width: widthBinWidth,
     },
     {
-        start: 501,
-        end: 1000,
+        value: 200,
+        start: 500,
+        end: 999,
         width: widthBinWidth,
     },
     {
+        value: 225,
         start: 1000,
-        end: 2500,
+        end: 2499,
         width: widthBinWidth,
     },
     {
-        start: 2501,
+        value: 250,
+        start: 2500,
         end: 5000,
         width: widthBinWidth,
     },
 ];
 
-const depthBinWidth = 26.75;
+const depthBinWidth = 27.75;
 
 export const depthBins: HistogramBin[] = [
     {
+        value: 1,
         start: 1,
-        end: 12,
+        end: 11,
         width: depthBinWidth,
     },
     {
-        start: 13,
-        end: 24,
+        value: 25,
+        start: 12,
+        end: 23,
         width: depthBinWidth,
     },
     {
-        start: 25,
-        end: 36,
+        value: 50,
+        start: 24,
+        end: 35,
         width: depthBinWidth,
     },
     {
-        start: 37,
-        end: 48,
+        value: 75,
+        start: 36,
+        end: 47,
         width: depthBinWidth,
     },
     {
-        start: 49,
-        end: 60,
+        value: 100,
+        start: 48,
+        end: 59,
         width: depthBinWidth,
     },
     {
-        start: 61,
-        end: 72,
+        value: 125,
+        start: 60,
+        end: 71,
         width: depthBinWidth,
     },
     {
-        start: 73,
-        end: 84,
+        value: 150,
+        start: 72,
+        end: 83,
         width: depthBinWidth,
     },
     {
-        start: 85,
-        end: 96,
+        value: 175,
+        start: 84,
+        end: 95,
         width: depthBinWidth,
     },
     {
-        start: 97,
-        end: 108,
+        value: 200,
+        start: 96,
+        end: 119,
         width: depthBinWidth,
     },
     {
-        start: 109,
-        end: 120,
-        width: depthBinWidth,
-    },
-    {
-        start: 121,
-        end: 132,
-        width: depthBinWidth,
-    },
-    {
-        start: 133,
+        value: 225,
+        start: 120,
         end: 144,
         width: depthBinWidth,
     },
 ];
 
-const elevationBinWidth = 25;
+const elevationBinWidth = 31;
 
 export const elevationBins: HistogramBin[] = [
     {
+        value: 1,
         start: 5000,
-        end: 5500,
-        width: elevationBinWidth,
-    },
-    {
-        start: 5501,
-        end: 6000,
-        width: elevationBinWidth,
-    },
-    {
-        start: 6001,
-        end: 6500,
-        width: elevationBinWidth,
-    },
-    {
-        start: 6501,
-        end: 7000,
-        width: elevationBinWidth,
-    },
-    {
-        start: 7001,
         end: 7500,
         width: elevationBinWidth,
     },
     {
+        value: 25,
         start: 7501,
         end: 8000,
         width: elevationBinWidth,
     },
     {
+        value: 50,
+        start: 8001,
+        end: 8500,
+        width: elevationBinWidth,
+    },
+    {
+        value: 75,
         start: 8501,
         end: 9000,
         width: elevationBinWidth,
     },
     {
+        value: 100,
         start: 9001,
         end: 9500,
         width: elevationBinWidth,
     },
     {
+        value: 125,
         start: 9501,
         end: 10000,
         width: elevationBinWidth,
     },
     {
+        value: 150,
         start: 10001,
         end: 10500,
         width: elevationBinWidth,
     },
     {
+        value: 175,
+        start: 10501,
+        end: 11000,
+        width: elevationBinWidth,
+    },
+    {
+        value: 200,
         start: 11001,
-        end: 11500,
-        width: elevationBinWidth,
-    },
-    {
-        start: 11501,
-        end: 12000,
-        width: elevationBinWidth,
-    },
-    {
-        start: 12001,
         end: 12500,
         width: elevationBinWidth,
     },

@@ -3,18 +3,18 @@ import {
     Checkbox,
     FormControlLabel,
     FormGroup,
-    Mark,
     Slider,
     Typography,
 } from '@mui/material';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
 import './RangeSlider.scss';
 
 export interface RangeSliderProps {
     minValue: number;
     maxValue: number;
-    step?: number;
+    value: number[];
+    marks: any;
+    scaleValue: (value: number) => number;
     onSliderChange?: (event: Event, value: number[]) => void;
     onCheckboxChange?: (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -29,8 +29,9 @@ export interface RangeSliderProps {
 export const RangeSlider: React.FC<RangeSliderProps> = ({
     minValue,
     maxValue,
-    // TODO: You will need to initialize teh step value accordingly
-    step = 1,
+    value,
+    marks,
+    scaleValue,
     onSliderChange = () => {},
     onCheckboxChange = () => {},
     width,
@@ -39,16 +40,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
     checkboxLabel = '',
     children,
 }) => {
-    const [range, setRange] = useState<number | number[]>([]);
-
-    useEffect(() => {
-        if (minValue && maxValue) {
-            setRange([minValue, maxValue]);
-        }
-    }, [minValue, maxValue]);
-
     const handleSliderChange = (event: Event, value: number | number[]) => {
-        setRange(value);
         onSliderChange(event, value as number[]);
     };
 
@@ -80,13 +72,16 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
             </FormGroup>
             {children}
             <Slider
+                style={{ width: 300 }}
                 getAriaLabel={() => `${label} Slider`}
                 min={minValue}
                 max={maxValue}
-                value={range}
+                marks={marks}
+                value={value}
                 onChange={handleSliderChange}
-                step={step}
+                step={null}
                 valueLabelDisplay="auto"
+                scale={scaleValue}
             />
         </Box>
     );

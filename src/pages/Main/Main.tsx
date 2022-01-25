@@ -138,7 +138,7 @@ export const Main: React.FC = () => {
             >
                 <div className="map-container">
                     <div className="map-container__filter">
-                        <Filters filteredAvalanches={filteredAvalanches}/>
+                        <Filters filteredAvalanches={filteredAvalanches} />
                     </div>
                     <div
                         className={classNames('map-container__map', {

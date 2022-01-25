@@ -3,9 +3,9 @@ import {useContext, useEffect, useState} from 'react';
 import CheckmarkDropdown, {
     DropdownOption,
 } from '../../../../../components/Inputs/CheckmarkDropdown';
+import { avalancheTypeLabels } from '../../../../../constants/AvalancheTypeLabels';
 import {AvalancheContext} from '../../../../../context/avalancheContext';
 import {AvalancheType} from '../../../../../enums/AvalancheType';
-import {avalancheTypeLabels} from '../../../../../models/AvalancheTypeLabels';
 import {useAvailableOptions} from '../../../../../utilities/customHooks/useAvailableOptions';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 

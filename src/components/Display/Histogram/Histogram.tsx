@@ -5,14 +5,14 @@ import './Histogram.scss';
 
 export interface HistogramProps {
     data: number[];
-    currentRange: number[];
     histogramBins: HistogramBin[];
+    selectedBins: HistogramBin[];
 }
 
 export const Histogram: React.FC<HistogramProps> = ({
     data,
-    currentRange,
     histogramBins,
+    selectedBins,
 }) => {
     const [chartHeight, setChartHeight] = useState<number>(1);
     const [hasRendered, setHasRendered] = useState<boolean>(false);
@@ -43,8 +43,8 @@ export const Histogram: React.FC<HistogramProps> = ({
         <div className="histogram" style={{height: `${height}px`, overflow: 'hidden'}}>
             {chartHeight &&
                 histogramBins.map((bin, i) => {
-                    const itemsInBin = initialData?.filter(x => {
-                        return x >= bin.start && x <= bin.end;
+                    const itemsInBin = initialData?.filter(data => {
+                        return data >= bin.start && data <= bin.end;
                     });
 
                     const binHeight = (itemsInBin.length / chartHeight) * height;
@@ -59,8 +59,7 @@ export const Histogram: React.FC<HistogramProps> = ({
                             <div
                                 className={classNames('histogram__bar', {
                                     'histogram__bar--transparent':
-                                        currentRange[0] > bin.end ||
-                                        currentRange[1] < bin.start,
+                                        !selectedBins.map(x => x.value).includes(bin.value)
                                 })}
                                 style={{height: `${binHeight}px`}}
                                 title={`${bin.start} - ${bin.end}`}

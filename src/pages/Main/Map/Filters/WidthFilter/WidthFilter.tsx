@@ -9,6 +9,8 @@ import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
 import {Avalanche} from '../../../../../graphql/types';
 import {Histogram} from '../../../../../components/Display/Histogram';
 import {widthBins} from '../../../../../constants/histogramBins';
+import {HistogramBin} from '../../../../../models/HistogramBin';
+import {widthFilterMarks} from '../../../../../constants/widthFilterMarks';
 
 export interface WidthFilterProps {
     className?: string;
@@ -21,10 +23,11 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
 }) => {
     const avalanchesQuery = useAvalanchesQuery();
 
-    const [avalancheWidthRange, setAvalancheWidthRange] = useState<number[]>(
-        []
-    );
-    const [sliderStep, setSliderStep] = useState<number>(1);
+    const [sliderValue, setSliderValue] = useState<number[]>([
+        1,
+        Math.max(...widthBins.map(x => x.value ?? 0)) + 25,
+    ]);
+    const [selectedBins, setSelectedBins] = useState<HistogramBin[]>([]);
 
     const avalancheContext = useContext(AvalancheContext);
 
@@ -36,15 +39,15 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
 
             const minAvalancheWidth = Math.min(...avalancheWidths);
             const maxAvalancheWidth = Math.max(...avalancheWidths);
-            const widthRange = [
-                minAvalancheWidth === 0 ? 1 : minAvalancheWidth,
-                maxAvalancheWidth,
-            ];
-            const stepNeededForNextBin = getStepNeededForNextBin(widthRange);
 
-            setSliderStep(stepNeededForNextBin);
+            const selectedBins = widthBins.filter(
+                bin =>
+                    (bin.value ?? 0) >= minAvalancheWidth &&
+                    (bin.value ?? 0) < maxAvalancheWidth
+            );
 
-            setAvalancheWidthRange(widthRange);
+            setSelectedBins(selectedBins);
+
             avalancheContext.setFilters('width', {
                 ...avalancheContext.filters.width,
                 minValue: minAvalancheWidth,
@@ -53,24 +56,23 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
         }
     }, [avalanchesQuery.data?.avalanches]);
 
-    const getStepNeededForNextBin = (currentSliderRange: number[]) => {
-        const currentBinIndex = widthBins.findIndex(bin => currentSliderRange[0] >= bin.start && currentSliderRange[0] <= bin.end);
-        const nextBinIndex = widthBins.length === currentBinIndex - 1 ? currentBinIndex :  currentBinIndex + 1;
-
-        return widthBins[nextBinIndex].start - widthBins[currentBinIndex].start;
-    };
-
     const handleWidthChange = debounce((event: Event, value: number[]) => {
-        const stepNeededForNextBin = getStepNeededForNextBin(value);
+        const minValue = value[0];
+        const maxValue = value[1];
 
-        setSliderStep(stepNeededForNextBin);
+        const selectedBins = widthBins.filter(
+            bin => (bin?.value ?? 0) >= minValue && (bin?.value ?? 0) < maxValue
+        );
+
+        setSelectedBins(selectedBins);
+        setSliderValue(value);
 
         avalancheContext.setFilters('width', {
             ...avalancheContext.filters.width,
-            minValue: value[0],
-            maxValue: value[1],
+            minValue: Math.min(...selectedBins.map(x => x.start)),
+            maxValue: Math.max(...selectedBins.map(x => x.end)),
         });
-    }, 300);
+    }, 50);
 
     const handleWidthCheckboxChange = (_: any, isChecked: boolean) => {
         avalancheContext.setFilters('width', {
@@ -91,13 +93,21 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
         return [];
     };
 
+    const scaleValues = (value: number): number => {
+        const currentBin = widthFilterMarks.find(x => x.value === value);
+
+        return currentBin?.scaledValue ?? 1;
+    };
+
     return (
         <RangeSlider
             width={350}
-            className={classNames('filters__filter', className)}
-            minValue={200}
-            maxValue={avalancheWidthRange[1]}
-            step={sliderStep}
+            value={sliderValue}
+            className={classNames('filters__filter filters__width', className)}
+            minValue={Math.min(...widthFilterMarks.map(x => x.value ?? 0))}
+            maxValue={Math.max(...widthFilterMarks.map(x => x.value ?? 0))}
+            marks={widthFilterMarks}
+            scaleValue={scaleValues}
             onSliderChange={handleWidthChange}
             onCheckboxChange={handleWidthCheckboxChange}
             label={'Width (in feet)'}
@@ -106,10 +116,7 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
             <Histogram
                 data={renderData()}
                 histogramBins={widthBins}
-                currentRange={[
-                    avalancheContext.filters.depth.minValue,
-                    avalancheContext.filters.depth.maxValue,
-                ]}
+                selectedBins={selectedBins}
             />
         </RangeSlider>
     );

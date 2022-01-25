@@ -1,11 +1,11 @@
 import './Filters.scss';
-import {DepthFilter} from './DepthFilter';
 import {TypeFilter} from './TypeFilter';
 import {AspectFilter} from './AspectFilter';
 import {CauseFilter} from './CauseFilter';
-import ElevationFilter from './ElevationFilter';
 import WidthFilter from './WidthFilter';
 import {Avalanche} from '../../../../graphql/types';
+import { DepthFilter } from './DepthFilter';
+import { ElevationFilter } from './ElevationFilter';
 
 export interface FiltersProps {
     filteredAvalanches: Avalanche[];

@@ -6,9 +6,11 @@ import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
-import {Histogram} from '../../../../../components/Display/Histogram';
 import {Avalanche} from '../../../../../graphql/types';
-import { depthBins } from '../../../../../constants/histogramBins';
+import {Histogram} from '../../../../../components/Display/Histogram';
+import {depthBins} from '../../../../../constants/histogramBins';
+import {HistogramBin} from '../../../../../models/HistogramBin';
+import { depthFilterMarks } from '../../../../../constants/depthFilterMarks';
 
 export interface DepthFilterProps {
     className?: string;
@@ -21,9 +23,11 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
 }) => {
     const avalanchesQuery = useAvalanchesQuery();
 
-    const [avalancheDepthRange, setAvalancheDepthRange] = useState<number[]>(
-        []
-    );
+    const [sliderValue, setSliderValue] = useState<number[]>([
+        1,
+        Math.max(...depthBins.map(x => x.value ?? 0)) + 25,
+    ]);
+    const [selectedBins, setSelectedBins] = useState<HistogramBin[]>([]);
 
     const avalancheContext = useContext(AvalancheContext);
 
@@ -32,29 +36,43 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
 
         if (avalanches) {
             const avalancheDepths = avalanches.map(x => x.depth ?? 0) ?? [];
-            const minAvalancheDepth = Math.min(...avalancheDepths);
-            const maxAvalancheDepth = Math.max(...avalancheDepths);
-            const depthRange = [
-                minAvalancheDepth === 0 ? 1 : minAvalancheDepth,
-                maxAvalancheDepth,
-            ];
 
-            setAvalancheDepthRange(depthRange);
+            const minAvalancheDepths = Math.min(...avalancheDepths);
+            const maxAvalancheDepths = Math.max(...avalancheDepths);
+
+            const selectedBins = depthBins.filter(
+                bin =>
+                    (bin.value ?? 0) >= minAvalancheDepths &&
+                    (bin.value ?? 0) < maxAvalancheDepths
+            );
+
+            setSelectedBins(selectedBins);
+
             avalancheContext.setFilters('depth', {
                 ...avalancheContext.filters.depth,
-                minValue: minAvalancheDepth,
-                maxValue: maxAvalancheDepth,
+                minValue: minAvalancheDepths,
+                maxValue: maxAvalancheDepths,
             });
         }
     }, [avalanchesQuery.data?.avalanches]);
 
     const handleDepthChange = debounce((event: Event, value: number[]) => {
+        const minValue = value[0];
+        const maxValue = value[1];
+
+        const selectedBins = depthBins.filter(
+            bin => (bin?.value ?? 0) >= minValue && (bin?.value ?? 0) < maxValue
+        );
+
+        setSelectedBins(selectedBins);
+        setSliderValue(value);
+
         avalancheContext.setFilters('depth', {
             ...avalancheContext.filters.depth,
-            minValue: value[0],
-            maxValue: value[1],
+            minValue: Math.min(...selectedBins.map(x => x.start)),
+            maxValue: Math.max(...selectedBins.map(x => x.end)),
         });
-    }, 100);
+    }, 50);
 
     const handleDepthCheckboxChange = (_: any, isChecked: boolean) => {
         avalancheContext.setFilters('depth', {
@@ -64,33 +82,41 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
     };
 
     const renderData = () => {
-        if (filteredAvalanches?.length ?? 0 > 0) {
-            return filteredAvalanches!
+        if (filteredAvalanches) {
+            const result = filteredAvalanches!
                 .map(x => x.depth)
                 .filter(x => x !== undefined) as number[];
+
+            return result;
         }
 
         return [];
     };
 
+    const scaleValues = (value: number): number => {
+        const currentBin = depthFilterMarks.find(x => x.value === value);
+
+        return currentBin?.scaledValue ?? 1;
+    };
+
     return (
         <RangeSlider
             width={350}
+            value={sliderValue}
             className={classNames('filters__filter', className)}
-            minValue={avalancheDepthRange[0]}
-            maxValue={avalancheDepthRange[1]}
+            minValue={Math.min(...depthFilterMarks.map(x => x.value ?? 0))}
+            maxValue={Math.max(...depthFilterMarks.map(x => x.value ?? 0))}
+            marks={depthFilterMarks}
+            scaleValue={scaleValues}
             onSliderChange={handleDepthChange}
             onCheckboxChange={handleDepthCheckboxChange}
-            label={'Depth (in inches)'}
-            checkboxLabel={'Include Unknown Depths'}
+            label={'Depth (in feet)'}
+            checkboxLabel="Include Unknown Depths?"
         >
             <Histogram
                 data={renderData()}
                 histogramBins={depthBins}
-                currentRange={[
-                    avalancheContext.filters.depth.minValue,
-                    avalancheContext.filters.depth.maxValue,
-                ]}
+                selectedBins={selectedBins}
             />
         </RangeSlider>
     );
