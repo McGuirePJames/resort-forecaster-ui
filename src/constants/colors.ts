@@ -1,8 +1,8 @@
-export const colorPrimary = '#0b5370';
+export const colorPrimary = '#3b6474';
 export const colorPrimaryLight = '#8dabba';
 export const colorPrimaryDark = '#33505d';
 
-// 38BBED f0f0f0
+// 0b5370 38BBED f0f0f0
 export const colorSecondary = '#38BBED';
 export const colorSecondaryLight = '#ffffff';
 export const colorSecondaryDark = '#aeaeae';

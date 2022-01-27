@@ -5,9 +5,21 @@
         height: inherit;
     }
 
-    svg {
-        width: 100%;
-        height: 40px;
-        margin-right: auto;
+    .logo {
+        position: relative;
+        height: 75px;
+        width: 75px;
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    &__mountain-icon {
+        position: absolute;
+        top: -10px !important;
+        left: 5px !important;
     }
 }

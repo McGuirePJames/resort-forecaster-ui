@@ -1,0 +1,32 @@
+.ava-map-logo {
+    position: relative;
+    cursor: pointer;
+
+    .fa-mountain {
+        position: absolute;
+    }
+
+    svg:nth-child(2) {
+        top: 30px;
+        left: 40px;
+        height: 1.25em;
+        width: 1.25em;
+
+    }
+
+    svg:nth-child(3) {
+        top: 18px;
+        left: 15px;
+        height: 1em;
+        width: 1em;
+        z-index: 2;
+    }
+
+    svg:nth-child(4) {
+        top: 10px;
+        left: 23px;
+        height: 1.4em;
+        width: 1.4em;
+    }
+
+}
