@@ -29,7 +29,7 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
 
     const renderCollapseContainer = () => {
         return (
-            <div className="collapse-container">
+            <div className="collapse-container filters__filter">
                 {!isFilterCollapsed && (
                     <>
                         <FontAwesomeIcon icon={faFilter} />
@@ -61,12 +61,19 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
             {renderCollapseContainer()}
             {!isFilterCollapsed ? (
                 <>
-                    <AspectFilter />
-                    <CauseFilter />
-                    <TypeFilter />
-                    <DepthFilter filteredAvalanches={filteredAvalanches} />
-                    <WidthFilter filteredAvalanches={filteredAvalanches} />
+                    <AspectFilter className="filters__filter" />
+                    <CauseFilter className="filters__filter" />
+                    <TypeFilter className="filters__filter" />
+                    <DepthFilter
+                        className="filters__filter"
+                        filteredAvalanches={filteredAvalanches}
+                    />
+                    <WidthFilter
+                        className="filters__filter"
+                        filteredAvalanches={filteredAvalanches}
+                    />
                     <ElevationFilter
+                        className="filters__filter"
                         filteredAvalanches={filteredAvalanches}
                     />{' '}
                 </>

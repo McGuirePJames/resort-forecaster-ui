@@ -103,7 +103,7 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
         <RangeSlider
             width={350}
             value={sliderValue}
-            className={classNames('filters__filter', className)}
+            className={classNames(className)}
             minValue={Math.min(...depthFilterMarks.map(x => x.value ?? 0))}
             maxValue={Math.max(...depthFilterMarks.map(x => x.value ?? 0))}
             marks={depthFilterMarks}

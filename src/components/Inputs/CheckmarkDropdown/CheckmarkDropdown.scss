@@ -1,6 +1,7 @@
-@import '../../../sass/utilities/variables.scss';
+@import '../../../sass/variables.scss';
 
 .checkmark-dropdown {
+    width: inherit;
     display: flex;
     flex-direction: column;
 }

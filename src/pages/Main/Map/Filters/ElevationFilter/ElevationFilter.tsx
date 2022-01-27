@@ -103,7 +103,7 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
         <RangeSlider
             width={350}
             value={sliderValue}
-            className={classNames('filters__filter filters__elevation', className)}
+            className={classNames('filters__elevation', className)}
             minValue={Math.min(...elevationFilterMarks.map(x => x.value ?? 0))}
             maxValue={Math.max(...elevationFilterMarks.map(x => x.value ?? 0))}
             marks={elevationFilterMarks}

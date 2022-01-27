@@ -1,37 +1,28 @@
-@import '../../../../sass/utilities/variables';
+@import '../../../../sass/variables';
+@import '../../../../sass/mixins/media';
 
 :root {
-    --filter-padding: 2rem;
+    --filter-padding: 2em;
     --filter-width: 370px;
+    --filter-width-mobile: 100vw;
+    --filter-padding-mobile: 0.75em;
 }
 
 .filters {
     width: var(--filter-width);
-    min-width: var(--filter-width);
-    max-width: var(--filter-width);
     height: calc(100% - calc(var(--filter-padding) * 2));
     background-color: $color-gray;
     padding: var(--filter-padding);
+    box-sizing: border-box;
 
-    &--collapsed {
-        --collapsed-filter-width: 50px;
-        width: var(--collapsed-filter-width);
-        min-width: var(--collapsed-filter-width);
-        max-width: var(--collapsed-filter-width);
-        padding: 0;
-        padding-top: var(--filter-padding);
-
-        .collapse-container {
-            justify-content: center;
-
-            svg {
-                margin-left: 2px !important;
-            }
-        }
+    @include phone {
+        width: var(--filter-width-mobile);
+        padding: 10px;
     }
 
-
     &__filter {
+        position: relative;
+
         &:not(:first-child) {
             margin-top: 1rem;
         }
@@ -46,6 +37,22 @@
     &__width {
         .MuiSlider-markLabel {
             font-size: 0.75rem;
+        }
+    }
+
+
+    &--collapsed {
+        --collapsed-filter-width: 50px;
+        width: var(--collapsed-filter-width);
+        padding: 0;
+        padding-top: var(--filter-padding);
+
+        .collapse-container {
+            justify-content: center;
+
+            svg {
+                margin-left: 2px !important;
+            }
         }
     }
 

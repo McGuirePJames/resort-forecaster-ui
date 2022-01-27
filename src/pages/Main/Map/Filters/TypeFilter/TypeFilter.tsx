@@ -56,7 +56,7 @@ export const TypeFilter: React.FC<TypeFilterProps> = ({
     };
 
     return (
-        <div className={classNames('dropdown-filter filters__filter', className)}>
+        <div className={classNames('dropdown-filter', className)}>
             <CheckmarkDropdown
                 onChange={handleTypeChange}
                 label="Type"

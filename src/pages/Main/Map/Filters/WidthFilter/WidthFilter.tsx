@@ -103,7 +103,7 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
         <RangeSlider
             width={350}
             value={sliderValue}
-            className={classNames('filters__filter filters__width', className)}
+            className={classNames('filters__width', className)}
             minValue={Math.min(...widthFilterMarks.map(x => x.value ?? 0))}
             maxValue={Math.max(...widthFilterMarks.map(x => x.value ?? 0))}
             marks={widthFilterMarks}

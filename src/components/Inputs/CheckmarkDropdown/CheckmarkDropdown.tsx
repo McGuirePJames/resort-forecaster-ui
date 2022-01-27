@@ -19,7 +19,6 @@ export interface DropdownOption {
 
 export interface CheckmarkDropdownProps {
     onChange?: (values: string[]) => void;
-    width?: string;
     label?: string;
     options?: DropdownOption[];
     selectedOptions?: DropdownOption[];
@@ -27,7 +26,6 @@ export interface CheckmarkDropdownProps {
 
 export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
     onChange,
-    width = '200',
     label = '',
     options,
     selectedOptions = [],
@@ -62,14 +60,14 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
             <Box sx={{color: 'primary.main'}}>
                 <label>{label}</label>
             </Box>
-            <FormControl sx={{marginTop: 1, width}} size={'medium'}>
+            <FormControl sx={{marginTop: 1, width: 'inherit'}} size={'medium'}>
                 <Select
                     labelId="checkmark-dropdown-label"
                     id="checkmark-dropdown"
                     multiple
                     value={selectedOptionIds.map(x => x.key)}
                     onChange={handleChange}
-                    input={<OutlinedInput />}
+                    input={<OutlinedInput sx={{width: 'inherit'}}/>}
                     renderValue={selected => {
                         return selected
                             .map(
