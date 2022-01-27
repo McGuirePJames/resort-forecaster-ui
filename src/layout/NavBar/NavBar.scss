@@ -1,5 +1,11 @@
+@import '../../sass/utilities/variables.scss';
+
 .navBar {
-    height: 80px;
+    min-height: 80px;
+
+    .title {
+        color: $color-white;
+    }
 
     > div {
         height: inherit;
@@ -9,6 +15,7 @@
         position: relative;
         height: 75px;
         width: 75px;
+        min-width: 75px;
 
         svg {
             position: absolute;

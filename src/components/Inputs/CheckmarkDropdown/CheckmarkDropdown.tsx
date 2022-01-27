@@ -1,6 +1,15 @@
-
-import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
+import {
+    Box,
+    Checkbox,
+    FormControl,
+    ListItemText,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    SelectChangeEvent,
+} from '@mui/material';
 import React, {useEffect, useState} from 'react';
+
 import './CheckmarkDropdown.scss';
 
 export interface DropdownOption {
@@ -26,7 +35,6 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
     const [selectedOptionIds, setSelectedOptionIds] = useState<
         DropdownOption[]
     >([]);
-
     const handleChange = (event: SelectChangeEvent<string[]>) => {
         const values = event.target.value as string[];
 
@@ -51,19 +59,17 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
 
     return (
         <div className="checkmark-dropdown">
-            <FormControl sx={{m: 1, width}} size={'medium'}>
-                <InputLabel
-                    id="checkmark-dropdownlabel"
-                >
-                    {label}
-                </InputLabel>
+            <Box sx={{color: 'primary.main'}}>
+                <label>{label}</label>
+            </Box>
+            <FormControl sx={{marginTop: 1, width}} size={'medium'}>
                 <Select
                     labelId="checkmark-dropdown-label"
                     id="checkmark-dropdown"
                     multiple
                     value={selectedOptionIds.map(x => x.key)}
                     onChange={handleChange}
-                    input={<OutlinedInput label={label} />}
+                    input={<OutlinedInput />}
                     renderValue={selected => {
                         return selected
                             .map(
@@ -76,19 +82,13 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
                     }}
                 >
                     {options?.map((option, i) => (
-                        <MenuItem
-                            key={i}
-                            value={option.key}
-                        >
+                        <MenuItem key={i} value={option.key}>
                             <Checkbox
                                 checked={selectedOptionIds
                                     .map(x => x.key)
                                     .includes(option.key)}
                             />
-                            <ListItemText
-                                primary={option.label}
-
-                            />
+                            <ListItemText primary={option.label} />
                         </MenuItem>
                     ))}
                 </Select>

@@ -10,17 +10,8 @@ main {
 
     .map-container {
         height: inherit;
-        width: 100vw;
         display: flex;
         position: relative;
-
-        &__filter {
-            --filter-width: 435px;
-            height: inherit;
-            min-width: var(--filter-width);
-            max-width: var(--filter-width);
-            width: var(--filter-width);
-        }
 
         &__map {
             height: inherit;

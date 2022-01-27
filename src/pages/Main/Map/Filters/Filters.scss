@@ -1,11 +1,35 @@
 @import '../../../../sass/utilities/variables';
 
-.filters {
-    --filter-pading: 2rem;
+:root {
+    --filter-padding: 2rem;
+    --filter-width: 370px;
+}
 
-    height: calc(100% - calc(var(--filter-pading) * 2));
+.filters {
+    width: var(--filter-width);
+    min-width: var(--filter-width);
+    max-width: var(--filter-width);
+    height: calc(100% - calc(var(--filter-padding) * 2));
     background-color: $color-gray;
-    padding: var(--filter-pading);
+    padding: var(--filter-padding);
+
+    &--collapsed {
+        --collapsed-filter-width: 50px;
+        width: var(--collapsed-filter-width);
+        min-width: var(--collapsed-filter-width);
+        max-width: var(--collapsed-filter-width);
+        padding: 0;
+        padding-top: var(--filter-padding);
+
+        .collapse-container {
+            justify-content: center;
+
+            svg {
+                margin-left: 2px !important;
+            }
+        }
+    }
+
 
     &__filter {
         &:not(:first-child) {
@@ -22,6 +46,30 @@
     &__width {
         .MuiSlider-markLabel {
             font-size: 0.75rem;
+        }
+    }
+
+    .collapse-container {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+
+        h4 {
+            margin-left: 10px;
+            color: orange;
+        }
+
+        .caret {
+            cursor: pointer;
+            color: $color-primary;
+            font-size: 3em;
+            font-weight: 100;
+            margin-left: auto;
+        }
+
+        .fa-filter {
+            font-size: 1.75em;
+            color: orange;
         }
     }
 }

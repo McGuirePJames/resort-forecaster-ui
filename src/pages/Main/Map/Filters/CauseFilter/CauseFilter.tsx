@@ -56,7 +56,7 @@ export const CauseFilter: React.FC<CauseFilterProps> = ({
     };
 
     return (
-        <div className={classNames('dropdown-filter', className)}>
+        <div className={classNames('dropdown-filter filters__filter', className)}>
             <CheckmarkDropdown
                 onChange={handleCauseChange}
                 label="Cause"

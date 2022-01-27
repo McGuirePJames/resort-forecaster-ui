@@ -20,8 +20,9 @@ export const NavBar = () => {
                     component="div"
                     sx={{flexGrow: 1, textAlign: 'center', fontWeight: 400}}
                     fontSize={30}
+                    className="title"
                 >
-                    Avalanches In Utah: March 2012 - Jan 2022
+                    Utah Avalanches: March 2012 - Jan 2022
                 </Typography>
             </Toolbar>
         </AppBar>

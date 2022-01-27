@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material';
+import { createTheme, ListItemText } from '@mui/material';
 import {colorPrimary, colorSecondary} from './colors';
 
 export const theme = createTheme({
@@ -10,6 +10,11 @@ export const theme = createTheme({
             main: colorSecondary,
         },
     },
+    typography: {
+        allVariants: {
+            color: colorPrimary,
+        }
+    }
 });
 
 export default theme;

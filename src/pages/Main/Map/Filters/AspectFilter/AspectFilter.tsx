@@ -54,7 +54,7 @@ export const AspectFilter: React.FC<AspectFilterProps> = ({className = ''}) => {
     };
 
     return (
-        <div className={classNames('dropdown-filter', className)}>
+        <div className={classNames('dropdown-filter filters__filter', className)}>
             <CheckmarkDropdown
                 onChange={handleAspectChange}
                 label="Aspect"
