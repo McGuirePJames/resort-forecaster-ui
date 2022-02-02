@@ -1,10 +1,10 @@
 @import '../../sass/mixins/media.scss';
 
 main {
-    height: 1225px;
+    height: 90vh;
 
     @include phone {
-        height: 1100px;
+        height: 82vh;
     }
 
     .carousel-container {

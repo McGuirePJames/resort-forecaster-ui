@@ -1,8 +1,14 @@
+@import '../../../sass/mixins/media.scss';
+
 .contact-modal {
     width: 500px;
     padding: 30px;
     display: flex;
     flex-direction: column;
+
+    @include phone {
+        width: 80vw;
+    }
 
     &__content {
         display: flex;
