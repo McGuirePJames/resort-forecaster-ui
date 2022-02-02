@@ -69,7 +69,11 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
             </Box>
             <FormControl
                 sx={[
-                    {marginTop: 1, width: 'inherit', color: 'secondary.contrastText',},
+                    {
+                        marginTop: 1,
+                        width: 'inherit',
+                        color: 'secondary.contrastText',
+                    },
                     {
                         '& .MuiOutlinedInput-notchedOutline': {
                             borderColor: 'secondary.contrastText',
@@ -111,7 +115,10 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
                     onChange={handleChange}
                     input={
                         <OutlinedInput
-                            sx={{width: 'inherit', color: 'secondary.contrastText'}}
+                            sx={{
+                                width: 'inherit',
+                                color: 'secondary.contrastText',
+                            }}
                         />
                     }
                     renderValue={selected => {
