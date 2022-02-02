@@ -10,7 +10,7 @@
 
 .filters {
     width: var(--filter-width);
-    height: calc(100% - calc(var(--filter-padding) * 2));
+    height: 100%;
     background-color: $color-gray;
     padding: var(--filter-padding);
     box-sizing: border-box;
@@ -61,22 +61,17 @@
         display: flex;
         align-items: center;
 
-        h4 {
-            margin-left: 10px;
-            color: orange;
-        }
-
         .caret {
             cursor: pointer;
-            color: $color-primary;
-            font-size: 3em;
             font-weight: 100;
             margin-left: auto;
+            transform: scale(5);
+            font-size: unset;
         }
 
-        .fa-filter {
-            font-size: 1.75em;
-            color: orange;
+        .filter {
+            transform: scale(2.7);
+            font-size: unset;
         }
     }
 }

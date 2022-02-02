@@ -11,6 +11,7 @@ export const colorTextOnPrimary = '#000000';
 export const colorTextOnSecondary = '#000000';
 
 export const colorGray = '#e9e9e9';
+export const colorDisabledGray = '#4c4c4c';
 export const colorOrange = '#FF7D4B';
 export const colorAqua = '#54C3BC';
 export const colorMagenta = '#E44A92';

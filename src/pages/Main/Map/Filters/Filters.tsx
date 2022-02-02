@@ -3,7 +3,6 @@ import {TypeFilter} from './TypeFilter';
 import {AspectFilter} from './AspectFilter';
 import {CauseFilter} from './CauseFilter';
 import WidthFilter from './WidthFilter';
-import {Avalanche} from '../../../../graphql/types';
 import {DepthFilter} from './DepthFilter';
 import {ElevationFilter} from './ElevationFilter';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -14,7 +13,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {useState} from 'react';
 import classNames from 'classnames';
-import {Typography} from '@mui/material';
+import {Box, Typography} from '@mui/material';
+import {Avalanche} from '../../../../models/Avalanche';
+import {ArrowLeft, ArrowRight, FilterAlt} from '@mui/icons-material';
 
 export interface FiltersProps {
     filteredAvalanches: Avalanche[];
@@ -32,19 +33,28 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
             <div className="collapse-container filters__filter">
                 {!isFilterCollapsed && (
                     <>
-                        <FontAwesomeIcon icon={faFilter} />
+                        {/* <FilterAlt
+                            className="filter"
+                            sx={{
+                                color: 'primary.main',
+                            }}
+                        /> */}
                         <Typography variant="h4">Filters</Typography>
-                        <FontAwesomeIcon
+                        <ArrowLeft
+                            sx={{
+                                color: 'secondary.contrastText',
+                            }}
                             className="caret"
-                            icon={faCaretLeft}
                             onClick={() => handleCollapseClick(true)}
                         />
                     </>
                 )}
                 {isFilterCollapsed && (
-                    <FontAwesomeIcon
+                    <ArrowRight
+                        sx={{
+                            color: 'secondary.contrastText',
+                        }}
                         className="caret"
-                        icon={faCaretRight}
                         onClick={() => handleCollapseClick(false)}
                     />
                 )}
@@ -53,10 +63,13 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
     };
 
     return (
-        <div
+        <Box
             className={classNames('filters', {
                 'filters--collapsed': isFilterCollapsed,
             })}
+            sx={{
+                backgroundColor: 'secondary.main',
+            }}
         >
             {renderCollapseContainer()}
             {!isFilterCollapsed ? (
@@ -75,10 +88,10 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
                     <ElevationFilter
                         className="filters__filter"
                         filteredAvalanches={filteredAvalanches}
-                    />{' '}
+                    />
                 </>
             ) : null}
-        </div>
+        </Box>
     );
 };
 

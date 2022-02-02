@@ -1,16 +1,17 @@
 import {useContext, useState} from 'react';
-import {AvalancheContext} from '../../../../../context/avalancheContext';
 
 import {useEffect} from 'react';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
-import {Avalanche} from '../../../../../graphql/types';
 import {Histogram} from '../../../../../components/Display/Histogram';
 import {depthBins} from '../../../../../constants/histogramBins';
 import {HistogramBin} from '../../../../../models/HistogramBin';
-import { depthFilterMarks } from '../../../../../constants/depthFilterMarks';
+import {depthFilterMarks} from '../../../../../constants/depthFilterMarks';
+import {Avalanche} from '../../../../../models/Avalanche';
+import {AvalancheContext, Theme, ThemeContext} from '../../../../../contexts';
+import { colorOrange } from '../../../../../constants/colors';
 
 export interface DepthFilterProps {
     className?: string;
@@ -28,11 +29,20 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
         Math.max(...depthBins.map(x => x.value ?? 0)) + 25,
     ]);
     const [selectedBins, setSelectedBins] = useState<HistogramBin[]>([]);
+    const [barColor, setBarColor] = useState<string>('');
 
     const avalancheContext = useContext(AvalancheContext);
 
+    const themeContext = useContext(ThemeContext);
+
     useEffect(() => {
-        const avalanches = avalanchesQuery.data?.avalanches;
+        if (themeContext?.theme) {
+            setBarColor(themeContext.theme === Theme.Light ? colorOrange : '#9e9e9e');
+        }
+    }, [themeContext.theme]);
+
+    useEffect(() => {
+        const avalanches = avalanchesQuery.data?.avalanches as Avalanche[];
 
         if (avalanches) {
             const avalancheDepths = avalanches.map(x => x.depth ?? 0) ?? [];
@@ -40,13 +50,7 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
             const minAvalancheDepths = Math.min(...avalancheDepths);
             const maxAvalancheDepths = Math.max(...avalancheDepths);
 
-            const selectedBins = depthBins.filter(
-                bin =>
-                    (bin.value ?? 0) >= minAvalancheDepths &&
-                    (bin.value ?? 0) < maxAvalancheDepths
-            );
-
-            setSelectedBins(selectedBins);
+            setSelectedBins(depthBins);
 
             avalancheContext.setFilters('depth', {
                 ...avalancheContext.filters.depth,
@@ -61,9 +65,9 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
         const maxValue = value[1];
 
         const selectedBins = depthBins.filter(
-            bin => (bin?.value ?? 0) >= minValue && (bin?.value ?? 0) < maxValue
+            bin => (bin.value ?? 0) >= minValue && (bin.value ?? 0) < maxValue
         );
-
+        console.log(minValue, maxValue, depthBins, selectedBins);
         setSelectedBins(selectedBins);
         setSliderValue(value);
 
@@ -117,6 +121,7 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
                 data={renderData()}
                 histogramBins={depthBins}
                 selectedBins={selectedBins}
+                barColor={barColor}
             />
         </RangeSlider>
     );

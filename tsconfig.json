@@ -14,10 +14,7 @@
         "noEmit": true,
         "jsx": "react-jsx",
         "lib": ["DOM"],
-        "types": [
-            "googlemaps"
-        ],
-        "suppressImplicitAnyIndexErrors": true,
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": ["src/graphql/types.ts"],
     "include": [
@@ -25,10 +22,10 @@
         "test/**/*.ts",
         "src/global.d.ts",
         "src/components/NavBarOld/NavBar.tsx",
-        "src/layout/index.tsx"
-, "src/constants/histogramBins.tsx"    ],
-    "lib": [
-        "ES6",
-        "DOM"
+        "src/layout/index.tsx",
+        "src/constants/histogramBins.tsx",
+        "src/contexts/avalancheContext.tsx",
+        "src/contexts/themeContext.tsx"
     ],
+    "lib": ["ES6", "DOM"]
 }

@@ -1,16 +1,18 @@
 import {useContext, useState} from 'react';
-import {AvalancheContext} from '../../../../../context/avalancheContext';
+import {AvalancheContext} from '../../../../../contexts/avalancheContext';
 
 import {useEffect} from 'react';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
-import {Avalanche} from '../../../../../graphql/types';
 import {Histogram} from '../../../../../components/Display/Histogram';
 import {elevationBins} from '../../../../../constants/histogramBins';
 import {HistogramBin} from '../../../../../models/HistogramBin';
-import { elevationFilterMarks } from '../../../../../constants/elevationFilterMarks';
+import {elevationFilterMarks} from '../../../../../constants/elevationFilterMarks';
+import {Avalanche} from '../../../../../models/Avalanche';
+import { Theme, ThemeContext } from '../../../../../contexts';
+import { colorOrange } from '../../../../../constants/colors';
 
 export interface ElevationFilterProps {
     className?: string;
@@ -28,25 +30,29 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
         Math.max(...elevationBins.map(x => x.value ?? 0)) + 25,
     ]);
     const [selectedBins, setSelectedBins] = useState<HistogramBin[]>([]);
+    const [barColor, setBarColor] = useState<string>('');
 
     const avalancheContext = useContext(AvalancheContext);
 
+    const themeContext = useContext(ThemeContext);
+
     useEffect(() => {
-        const avalanches = avalanchesQuery.data?.avalanches;
+        if (themeContext?.theme) {
+            setBarColor(themeContext.theme === Theme.Light ? colorOrange : '#9e9e9e');
+        }
+    }, [themeContext.theme]);
+
+    useEffect(() => {
+        const avalanches = avalanchesQuery.data?.avalanches as Avalanche[];
 
         if (avalanches) {
-            const avalancheElevations = avalanches.map(x => x.elevation ?? 0) ?? [];
+            const avalancheElevations =
+                avalanches.map(x => x.elevation ?? 0) ?? [];
 
             const minAvalancheElevation = Math.min(...avalancheElevations);
             const maxAvalancheElevation = Math.max(...avalancheElevations);
 
-            const selectedBins = elevationBins.filter(
-                bin =>
-                    (bin.value ?? 0) >= minAvalancheElevation &&
-                    (bin.value ?? 0) < maxAvalancheElevation
-            );
-
-            setSelectedBins(selectedBins);
+            setSelectedBins(elevationBins);
 
             avalancheContext.setFilters('elevation', {
                 ...avalancheContext.filters.elevation,
@@ -61,7 +67,7 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
         const maxValue = value[1];
 
         const selectedBins = elevationBins.filter(
-            bin => (bin?.value ?? 0) >= minValue && (bin?.value ?? 0) < maxValue
+            bin => (bin.value ?? 0) >= minValue && (bin.value ?? 0) < maxValue
         );
 
         setSelectedBins(selectedBins);
@@ -117,6 +123,7 @@ export const ElevationFilter: React.FC<ElevationFilterProps> = ({
                 data={renderData()}
                 histogramBins={elevationBins}
                 selectedBins={selectedBins}
+                barColor={barColor}
             />
         </RangeSlider>
     );

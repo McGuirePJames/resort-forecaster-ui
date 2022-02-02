@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import './AvalancheMap.scss';
 import ReactMapGL, {MapEvent, MapRef, Source} from 'react-map-gl';
 import {AvalancheMapLayers} from '../MapLayers';
-import {Avalanche} from '../../../../graphql/types';
+import { Avalanche } from '../../../../models/Avalanche';
 
 export interface AvalancheMapProps {
     avalanches: Avalanche[];

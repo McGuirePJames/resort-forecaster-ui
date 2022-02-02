@@ -4,7 +4,7 @@ import CheckmarkDropdown, {
     DropdownOption,
 } from '../../../../../components/Inputs/CheckmarkDropdown';
 import { AvalancheCauseLabels } from '../../../../../constants/AvalancheCauseLabels';
-import {AvalancheContext} from '../../../../../context/avalancheContext';
+import {AvalancheContext} from '../../../../../contexts/avalancheContext';
 import {AvalancheCause} from '../../../../../enums/AvalancheCause';
 import {useAvailableOptions} from '../../../../../utilities/customHooks/useAvailableOptions';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
@@ -60,7 +60,6 @@ export const CauseFilter: React.FC<CauseFilterProps> = ({
             <CheckmarkDropdown
                 onChange={handleCauseChange}
                 label="Cause"
-                width="300px"
                 options={availableCauseOptions}
                 selectedOptions={availableCauseOptions}
             />

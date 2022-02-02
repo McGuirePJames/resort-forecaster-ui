@@ -7,6 +7,7 @@ import {
     OutlinedInput,
     Select,
     SelectChangeEvent,
+    FormLabel,
 } from '@mui/material';
 import React, {useEffect, useState} from 'react';
 
@@ -57,17 +58,62 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
 
     return (
         <div className="checkmark-dropdown">
-            <Box sx={{color: 'primary.main'}}>
-                <label>{label}</label>
+            <Box>
+                <FormLabel
+                    sx={{
+                        color: 'typography.allVariants.color',
+                    }}
+                >
+                    {label}
+                </FormLabel>
             </Box>
-            <FormControl sx={{marginTop: 1, width: 'inherit'}} size={'medium'}>
+            <FormControl
+                sx={[
+                    {marginTop: 1, width: 'inherit', color: 'secondary.contrastText',},
+                    {
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'secondary.contrastText',
+                        },
+                    },
+                ]}
+                size={'medium'}
+            >
                 <Select
-                    labelId="checkmark-dropdown-label"
-                    id="checkmark-dropdown"
+                    MenuProps={{
+                        sx: [
+                            {
+                                '& .MuiList-root': {
+                                    padding: 0,
+                                    backgroundColor: 'primary.light',
+                                },
+                            },
+                        ],
+                    }}
+                    sx={[
+                        {
+                            color: 'secondary.contrastText',
+                            backgroundColor: 'secondary.main',
+                        },
+                        {
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'secondary.contrastText',
+                            },
+                            '& .MuiSvgIcon-root': {
+                                color: 'secondary.contrastText',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'secondary.contrastText',
+                            },
+                        },
+                    ]}
                     multiple
                     value={selectedOptionIds.map(x => x.key)}
                     onChange={handleChange}
-                    input={<OutlinedInput sx={{width: 'inherit'}}/>}
+                    input={
+                        <OutlinedInput
+                            sx={{width: 'inherit', color: 'secondary.contrastText'}}
+                        />
+                    }
                     renderValue={selected => {
                         return selected
                             .map(
@@ -80,7 +126,13 @@ export const CheckmarkDropdown: React.FC<CheckmarkDropdownProps> = ({
                     }}
                 >
                     {options?.map((option, i) => (
-                        <MenuItem key={i} value={option.key}>
+                        <MenuItem
+                            key={i}
+                            value={option.key}
+                            sx={{
+                                backgroundColor: 'primary.light',
+                            }}
+                        >
                             <Checkbox
                                 checked={selectedOptionIds
                                     .map(x => x.key)

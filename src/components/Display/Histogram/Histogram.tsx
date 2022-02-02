@@ -7,12 +7,14 @@ export interface HistogramProps {
     data: number[];
     histogramBins: HistogramBin[];
     selectedBins: HistogramBin[];
+    barColor?: string;
 }
 
 export const Histogram: React.FC<HistogramProps> = ({
     data,
     histogramBins,
     selectedBins,
+    barColor = '',
 }) => {
     const [chartHeight, setChartHeight] = useState<number>(1);
     const [hasRendered, setHasRendered] = useState<boolean>(false);
@@ -40,14 +42,18 @@ export const Histogram: React.FC<HistogramProps> = ({
     const height = 75;
 
     return (
-        <div className="histogram" style={{height: `${height}px`, overflow: 'hidden'}}>
+        <div
+            className="histogram"
+            style={{height: `${height}px`, overflow: 'hidden'}}
+        >
             {chartHeight &&
                 histogramBins.map((bin, i) => {
                     const itemsInBin = initialData?.filter(data => {
                         return data >= bin.start && data <= bin.end;
                     });
 
-                    const binHeight = (itemsInBin.length / chartHeight) * height;
+                    const binHeight =
+                        (itemsInBin.length / chartHeight) * height;
 
                     return (
                         <div
@@ -58,10 +64,11 @@ export const Histogram: React.FC<HistogramProps> = ({
                             <div className="histogram__bar-outline" />
                             <div
                                 className={classNames('histogram__bar', {
-                                    'histogram__bar--transparent':
-                                        !selectedBins.map(x => x.value).includes(bin.value)
+                                    'histogram__bar--transparent': !selectedBins
+                                        .map(x => x.value)
+                                        .includes(bin.value),
                                 })}
-                                style={{height: `${binHeight}px`}}
+                                style={{height: `${binHeight}px`, backgroundColor: barColor}}
                                 title={`${bin.start} - ${bin.end}`}
                             />
                         </div>

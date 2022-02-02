@@ -1,16 +1,18 @@
 import {useContext, useState} from 'react';
-import {AvalancheContext} from '../../../../../context/avalancheContext';
+import {AvalancheContext} from '../../../../../contexts/avalancheContext';
 
 import {useEffect} from 'react';
 import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 import {useAvalanchesQuery} from '../../../../../utilities/customHooks/useAvalanchesQuery';
 import {RangeSlider} from '../../../../../components/Inputs/RangeSlider';
-import {Avalanche} from '../../../../../graphql/types';
 import {Histogram} from '../../../../../components/Display/Histogram';
 import {widthBins} from '../../../../../constants/histogramBins';
 import {HistogramBin} from '../../../../../models/HistogramBin';
 import {widthFilterMarks} from '../../../../../constants/widthFilterMarks';
+import {Avalanche} from '../../../../../models/Avalanche';
+import { Theme, ThemeContext } from '../../../../../contexts';
+import { colorOrange } from '../../../../../constants/colors';
 
 export interface WidthFilterProps {
     className?: string;
@@ -28,11 +30,19 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
         Math.max(...widthBins.map(x => x.value ?? 0)) + 25,
     ]);
     const [selectedBins, setSelectedBins] = useState<HistogramBin[]>([]);
+    const [barColor, setBarColor] = useState<string>('');
 
     const avalancheContext = useContext(AvalancheContext);
+    const themeContext = useContext(ThemeContext);
 
     useEffect(() => {
-        const avalanches = avalanchesQuery.data?.avalanches;
+        if (themeContext?.theme) {
+            setBarColor(themeContext.theme === Theme.Light ? colorOrange : '#9e9e9e');
+        }
+    }, [themeContext.theme]);
+
+    useEffect(() => {
+        const avalanches = avalanchesQuery.data?.avalanches as Avalanche[];
 
         if (avalanches) {
             const avalancheWidths = avalanches.map(x => x.width ?? 0) ?? [];
@@ -40,13 +50,7 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
             const minAvalancheWidth = Math.min(...avalancheWidths);
             const maxAvalancheWidth = Math.max(...avalancheWidths);
 
-            const selectedBins = widthBins.filter(
-                bin =>
-                    (bin.value ?? 0) >= minAvalancheWidth &&
-                    (bin.value ?? 0) < maxAvalancheWidth
-            );
-
-            setSelectedBins(selectedBins);
+            setSelectedBins(widthBins);
 
             avalancheContext.setFilters('width', {
                 ...avalancheContext.filters.width,
@@ -61,7 +65,7 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
         const maxValue = value[1];
 
         const selectedBins = widthBins.filter(
-            bin => (bin?.value ?? 0) >= minValue && (bin?.value ?? 0) < maxValue
+            bin => (bin.value ?? 0) >= minValue && (bin.value ?? 0) < maxValue
         );
 
         setSelectedBins(selectedBins);
@@ -117,6 +121,7 @@ export const WidthFilter: React.FC<WidthFilterProps> = ({
                 data={renderData()}
                 histogramBins={widthBins}
                 selectedBins={selectedBins}
+                barColor={barColor}
             />
         </RangeSlider>
     );

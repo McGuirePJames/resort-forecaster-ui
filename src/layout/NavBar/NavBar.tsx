@@ -1,20 +1,15 @@
 import {AppBar, Toolbar, Typography} from '@mui/material';
 import './NavBar.scss';
 import AvaMapLogo from '../../components/Icons/AvaMapLogo';
+import { ThemeSlider } from '../../components/Display/ThemeSlider';
 
 export const NavBar = () => {
     return (
         <AppBar className="navBar" position="static">
             <Toolbar>
-                <div className="logo">
-                    <AvaMapLogo height={'75px'} width={'75px'} fill={'#3d583d'} stroke={'black'}/>
-                </div>
-                {/* <Typography
-                    sx={{flexGrow: 1, marginLeft: '20px', fontWeight: 300}}
-                    fontSize={26}
-                >
-                    AvaMap
-                </Typography> */}
+                {/* <div className="logo">
+                    <AvaMapLogo height={'75px'} width={'75px'} fill={'#527652'} stroke={'black'}/>
+                </div> */}
                 <Typography
                     variant="h1"
                     component="div"
@@ -24,6 +19,7 @@ export const NavBar = () => {
                 >
                     Utah Avalanches: March 2012 - Jan 2022
                 </Typography>
+                <ThemeSlider />
             </Toolbar>
         </AppBar>
     );

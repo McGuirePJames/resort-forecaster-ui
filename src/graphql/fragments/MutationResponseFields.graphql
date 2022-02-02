@@ -1,0 +1,4 @@
+fragment MutationResponseFields on MutationResponse {
+    success
+    errors
+}

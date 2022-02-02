@@ -1,7 +1,8 @@
 import {Link, Paper} from '@mui/material';
-import {Avalanche} from '../../../../graphql/types';
-import CloseIcon from '@mui/icons-material/Close';
 import './AvalancheInfoOverlay.scss';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {Avalanche} from '../../../../models/Avalanche';
 
 export interface AvalancheInfoOverlayProps {
     avalanche: Avalanche;
@@ -19,7 +20,7 @@ export const AvalancheInfoOverlay: React.FC<AvalancheInfoOverlayProps> = ({
 
             if (key === 'width') {
                 value += "'";
-            } else if (key=== 'depth') {
+            } else if (key === 'depth') {
                 value += '"';
             } else if (key === 'id' || key === 'externalId') {
                 return null;
@@ -39,17 +40,28 @@ export const AvalancheInfoOverlay: React.FC<AvalancheInfoOverlayProps> = ({
     };
 
     return (
-        <Paper className="avalanche-info-overlay" elevation={3}>
+        <Paper
+            className="avalanche-info-overlay"
+            elevation={3}
+            sx={{
+                backgroundColor: 'secondary.main',
+                color: 'secondary.contrastText',
+            }}
+        >
             <div className="avalanche-info-overlay__close-icon-row">
                 <Link
                     className="avalanche-info-overlay__title"
                     href={`https://www.utahavalanchecenter.org/avalanches/${avalanche.externalId}`}
                     target="_blank"
                     rel="noreferrer"
+                    sx={theme => ({
+                        color: 'secondary.contrastText',
+                        textDecorationColor: theme.palette.secondary.contrastText,
+                    })}
                 >
                     {avalanche.externalId}
                 </Link>
-                <CloseIcon onClick={onClose} />
+                <FontAwesomeIcon icon={faTimes} onClick={onClose} />
             </div>
             {Object.entries(avalanche).map(avalancheEntry => {
                 return renderData(avalancheEntry);

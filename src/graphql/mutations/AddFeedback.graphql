@@ -1,0 +1,5 @@
+mutation AddFeedback($description: String!, $feedbackTypeId: Int!) {
+    addFeedback(description: $description, feedbackTypeId: $feedbackTypeId) {
+        ...MutationResponseFields
+    }
+}

@@ -1,0 +1,26 @@
+@import '../../../sass/variables.scss';
+
+.modal {
+    min-width: 300px;
+    min-height: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    &__header-row {
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+    }
+
+    &__close-icon {
+        font-size: 21pt;
+        cursor: pointer;
+        margin-left: auto;
+    }
+}

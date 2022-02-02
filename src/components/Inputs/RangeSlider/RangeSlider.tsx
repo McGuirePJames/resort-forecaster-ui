@@ -60,7 +60,14 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
                         <Checkbox
                             size={'small'}
                             onChange={handleCheckboxChange}
-                            sx={{paddingRight: '3px'}}
+                            sx={[
+                                {color: 'secondary.contrastText'},
+                                {
+                                    '&.Mui-checked': {
+                                        color: 'secondary.contrastText',
+                                    }
+                                },
+                            ]}
                         />
                     }
                     label={
@@ -72,7 +79,14 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({
             </FormGroup>
             {children}
             <Slider
-                style={{ width: 300 }}
+                sx={[
+                    {
+                        '& .MuiSlider-markLabel': {
+                            color: 'secondary.contrastText',
+                        },
+                    },
+                ]}
+                style={{width: 300}}
                 getAriaLabel={() => `${label} Slider`}
                 min={minValue}
                 max={maxValue}

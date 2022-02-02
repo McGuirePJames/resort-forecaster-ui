@@ -1,52 +1,323 @@
-schema {
-    query: Query
-}
-
-type Query {
-    skiResorts: [SkiResort]
-    weatherForecast(skiResortId: String!): WeatherForecast
-    avalanches: [Avalanche]
-}
-
-type SkiResort {
-    id: String!
-    name: String
-    description: String
-    imageUrl: String
-    latitude: Float
-    longitude: Float
-    weatherForecast: WeatherForecast
-}
-
-type WeatherForecast {
-    currentForecast: CurrentForecast
-}
-
-type CurrentForecast {
-    clouds: Float
-    dewPoint: Float
-    feelsLike: Float
-    humidity: Float
-    pressure: Float
-    sunrise: Float
-    sunset: Float
-    temp: Float
-    uVI: Float
-    visibility: Float
-    windDeg: Float
-    windGust: Float
-    windSpeed: Float
+﻿schema {
+  query: Query
+  mutation: Mutation
 }
 
 type Avalanche {
-    id: String!
-    externalId: String!
-    latitude: Float
-    longitude: Float
-    elevation: Int
-    aspect: String
-    type: String
-    cause: String
-    depth: Int
-    width: Int
+  externalId: String
+  date: DateTime
+  latitude: Float
+  longitude: Float
+  elevation: Int
+  aspect: String
+  type: String
+  cause: String
+  depth: Int
+  width: Int
+  id: UUID!
 }
+
+type CurrentForecast {
+  clouds: Decimal
+  dewPoint: Decimal
+  feelsLike: Decimal
+  humidity: Decimal
+  pressure: Decimal
+  sunrise: Long
+  sunset: Long
+  temp: Decimal
+  uVI: Decimal
+  visibility: Decimal
+  windDeg: Decimal
+  windGust: Decimal
+  windSpeed: Decimal
+  id: UUID!
+}
+
+type Mutation {
+  addAvalanche(avalanche: AvalancheInput!): String!
+  addFeedback(description: String! feedbackTypeId: Int!): MutationResponse!
+}
+
+type MutationResponse {
+  success: Boolean!
+  errors: [String!]!
+}
+
+type Query {
+  skiResorts(where: SkiResortFilterInput order: [SkiResortSortInput!]): [SkiResort!]!
+  skiResortsById(ids: [UUID!]!): [SkiResort!]!
+  forecast(skiResortId: String!): WeatherForecast!
+  avalanches(where: AvalancheFilterInput order: [AvalancheSortInput!]): [Avalanche!]!
+}
+
+type SkiResort {
+  weatherForecast: WeatherForecast
+  name: String
+  description: String
+  imageUrl: String
+  latitude: Decimal!
+  longitude: Decimal!
+  id: UUID!
+}
+
+type WeatherForecast {
+  currentForecast: CurrentForecast!
+}
+
+input AvalancheFilterInput {
+  and: [AvalancheFilterInput!]
+  or: [AvalancheFilterInput!]
+  externalId: StringOperationFilterInput
+  date: ComparableNullableOfDateTimeOperationFilterInput
+  latitude: ComparableNullableOfDoubleOperationFilterInput
+  longitude: ComparableNullableOfDoubleOperationFilterInput
+  elevation: ComparableNullableOfInt32OperationFilterInput
+  aspect: StringOperationFilterInput
+  type: StringOperationFilterInput
+  cause: StringOperationFilterInput
+  depth: ComparableNullableOfInt32OperationFilterInput
+  width: ComparableNullableOfInt32OperationFilterInput
+  id: ComparableGuidOperationFilterInput
+}
+
+input AvalancheInput {
+  externalId: String
+  date: DateTime
+  latitude: Float
+  longitude: Float
+  elevation: Int
+  aspect: String
+  type: String
+  cause: String
+  depth: Int
+  width: Int
+  id: UUID!
+}
+
+input AvalancheSortInput {
+  externalId: SortEnumType
+  date: SortEnumType
+  latitude: SortEnumType
+  longitude: SortEnumType
+  elevation: SortEnumType
+  aspect: SortEnumType
+  type: SortEnumType
+  cause: SortEnumType
+  depth: SortEnumType
+  width: SortEnumType
+  id: SortEnumType
+}
+
+input ComparableDecimalOperationFilterInput {
+  eq: Decimal
+  neq: Decimal
+  in: [Decimal!]
+  nin: [Decimal!]
+  gt: Decimal
+  ngt: Decimal
+  gte: Decimal
+  ngte: Decimal
+  lt: Decimal
+  nlt: Decimal
+  lte: Decimal
+  nlte: Decimal
+}
+
+input ComparableGuidOperationFilterInput {
+  eq: UUID
+  neq: UUID
+  in: [UUID!]
+  nin: [UUID!]
+  gt: UUID
+  ngt: UUID
+  gte: UUID
+  ngte: UUID
+  lt: UUID
+  nlt: UUID
+  lte: UUID
+  nlte: UUID
+}
+
+input ComparableNullableOfDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+input ComparableNullableOfDecimalOperationFilterInput {
+  eq: Decimal
+  neq: Decimal
+  in: [Decimal]
+  nin: [Decimal]
+  gt: Decimal
+  ngt: Decimal
+  gte: Decimal
+  ngte: Decimal
+  lt: Decimal
+  nlt: Decimal
+  lte: Decimal
+  nlte: Decimal
+}
+
+input ComparableNullableOfDoubleOperationFilterInput {
+  eq: Float
+  neq: Float
+  in: [Float]
+  nin: [Float]
+  gt: Float
+  ngt: Float
+  gte: Float
+  ngte: Float
+  lt: Float
+  nlt: Float
+  lte: Float
+  nlte: Float
+}
+
+input ComparableNullableOfInt32OperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int]
+  nin: [Int]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input ComparableNullableOfInt64OperationFilterInput {
+  eq: Long
+  neq: Long
+  in: [Long]
+  nin: [Long]
+  gt: Long
+  ngt: Long
+  gte: Long
+  ngte: Long
+  lt: Long
+  nlt: Long
+  lte: Long
+  nlte: Long
+}
+
+input CurrentForecastFilterInput {
+  and: [CurrentForecastFilterInput!]
+  or: [CurrentForecastFilterInput!]
+  clouds: ComparableNullableOfDecimalOperationFilterInput
+  dewPoint: ComparableNullableOfDecimalOperationFilterInput
+  feelsLike: ComparableNullableOfDecimalOperationFilterInput
+  humidity: ComparableNullableOfDecimalOperationFilterInput
+  pressure: ComparableNullableOfDecimalOperationFilterInput
+  sunrise: ComparableNullableOfInt64OperationFilterInput
+  sunset: ComparableNullableOfInt64OperationFilterInput
+  temp: ComparableNullableOfDecimalOperationFilterInput
+  uVI: ComparableNullableOfDecimalOperationFilterInput
+  visibility: ComparableNullableOfDecimalOperationFilterInput
+  windDeg: ComparableNullableOfDecimalOperationFilterInput
+  windGust: ComparableNullableOfDecimalOperationFilterInput
+  windSpeed: ComparableNullableOfDecimalOperationFilterInput
+  id: ComparableGuidOperationFilterInput
+}
+
+input CurrentForecastSortInput {
+  clouds: SortEnumType
+  dewPoint: SortEnumType
+  feelsLike: SortEnumType
+  humidity: SortEnumType
+  pressure: SortEnumType
+  sunrise: SortEnumType
+  sunset: SortEnumType
+  temp: SortEnumType
+  uVI: SortEnumType
+  visibility: SortEnumType
+  windDeg: SortEnumType
+  windGust: SortEnumType
+  windSpeed: SortEnumType
+  id: SortEnumType
+}
+
+input SkiResortFilterInput {
+  and: [SkiResortFilterInput!]
+  or: [SkiResortFilterInput!]
+  name: StringOperationFilterInput
+  description: StringOperationFilterInput
+  imageUrl: StringOperationFilterInput
+  latitude: ComparableDecimalOperationFilterInput
+  longitude: ComparableDecimalOperationFilterInput
+  weatherForecast: WeatherForecastFilterInput
+  id: ComparableGuidOperationFilterInput
+}
+
+input SkiResortSortInput {
+  name: SortEnumType
+  description: SortEnumType
+  imageUrl: SortEnumType
+  latitude: SortEnumType
+  longitude: SortEnumType
+  weatherForecast: WeatherForecastSortInput
+  id: SortEnumType
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input WeatherForecastFilterInput {
+  and: [WeatherForecastFilterInput!]
+  or: [WeatherForecastFilterInput!]
+  currentForecast: CurrentForecastFilterInput
+}
+
+input WeatherForecastSortInput {
+  currentForecast: CurrentForecastSortInput
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+"The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."
+directive @defer("If this argument label has a value other than null, it will be passed on to the result of this defer directive. This label is intended to give client applications a way to identify to which fragment a deferred result belongs to." label: String "Deferred when true." if: Boolean) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"The `@specifiedBy` directive is used within the type system definition language to provide a URL for specifying the behavior of custom scalar definitions."
+directive @specifiedBy("The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types." url: String!) on SCALAR
+
+"The `@stream` directive may be provided for a field of `List` type so that the backend can leverage technology such as asynchronous iterators to provide a partial list in the initial response, and additional list items in subsequent responses. `@include` and `@skip` take precedence over `@stream`."
+directive @stream("If this argument label has a value other than null, it will be passed on to the result of this stream directive. This label is intended to give client applications a way to identify to which fragment a streamed result belongs to." label: String "The initial elements that shall be send down to the consumer." initialCount: Int! = 0 "Streamed when true." if: Boolean) on FIELD
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime @specifiedBy(url: "https:\/\/www.graphql-scalars.com\/date-time")
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long
+
+scalar UUID @specifiedBy(url: "https:\/\/tools.ietf.org\/html\/rfc4122")

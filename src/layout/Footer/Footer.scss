@@ -1,5 +1,30 @@
 @import '../../sass/variables';
+@import '../../sass/mixins/media';
 
 .footer {
     flex: 1 1 0%;
+
+    .svg-inline--fa  {
+        margin-right: 10px;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        min-width: 100px;
+
+        @include phone {
+            min-width: 250px;
+        }
+
+        @include desktop {
+            min-width: 100px;
+        }
+
+        > p {
+            cursor: pointer;
+        }
+    }
 }
