@@ -9,8 +9,8 @@ import AvalancheInfoOverlay from './Map/AvalancheInfoOverlay';
 import {MapEvent} from 'react-map-gl';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-import {toast} from 'react-toastify';
 import {Avalanche} from '../../models/Avalanche';
+import { QueryErrors } from '../../components/Display/QueryErrors';
 
 export const Main: React.FC = () => {
     const avalanchesQuery = useAvalanchesQuery();
@@ -100,22 +100,9 @@ export const Main: React.FC = () => {
         setSelectedAvalanche(undefined);
     };
 
-    useEffect(() => {
-        if (avalanchesQuery.isError) {
-            toast.error('Failure fetching avalanche data', {
-                position: 'bottom-right',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
-    }, [avalanchesQuery.error]);
-
     return (
         <main>
+            <QueryErrors />
             <div className="map-container">
                 <div className="map-container__filter">
                     <Filters filteredAvalanches={filteredAvalanches} />

@@ -1,7 +1,11 @@
+import {useEffect, useRef} from 'react';
 import {useQuery} from 'react-query';
+import {toast} from 'react-toastify';
 import {graph} from '../../graphql';
 
 export const useAvalanchesQuery = () => {
+    const isToastMessageActive = useRef<boolean>();
+
     const avalanchesQuery = useQuery(
         'avalanches',
         () => graph.GetAvalanches(),
