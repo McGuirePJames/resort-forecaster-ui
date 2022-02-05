@@ -53,7 +53,7 @@ export const AvalancheInfoOverlay: React.FC<AvalancheInfoOverlayProps> = ({
                     className="avalanche-info-overlay__title"
                     href={`https://www.utahavalanchecenter.org/avalanches/${avalanche.externalId}`}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener"
                     sx={theme => ({
                         color: 'secondary.contrastText',
                         textDecorationColor: theme.palette.secondary.contrastText,

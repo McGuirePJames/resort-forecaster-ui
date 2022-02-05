@@ -42,6 +42,10 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
                 )}
                 {isFilterCollapsed && (
                     <FontAwesomeIcon
+                        style={{
+                            color: theme.palette.secondary.contrastText,
+                            marginRight: '0',
+                        }}
                         icon={faCaretRight}
                         className="caret"
                         onClick={() => handleCollapseClick(false)}
