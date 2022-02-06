@@ -1,7 +1,6 @@
 import {AppBar, Toolbar, Typography} from '@mui/material';
 import './NavBar.scss';
-import AvaMapLogo from '../../components/Icons/AvaMapLogo';
-import { ThemeSlider } from '../../components/Display/ThemeSlider';
+import {ThemeSlider} from '../../components/Display/ThemeSlider';
 
 export const NavBar = () => {
     return (

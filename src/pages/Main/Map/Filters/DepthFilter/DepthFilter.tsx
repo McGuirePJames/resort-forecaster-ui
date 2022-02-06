@@ -67,7 +67,6 @@ export const DepthFilter: React.FC<DepthFilterProps> = ({
         const selectedBins = depthBins.filter(
             bin => (bin.value ?? 0) >= minValue && (bin.value ?? 0) < maxValue
         );
-        console.log(minValue, maxValue, depthBins, selectedBins);
         setSelectedBins(selectedBins);
         setSliderValue(value);
 

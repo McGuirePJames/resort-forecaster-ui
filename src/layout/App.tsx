@@ -6,6 +6,7 @@ import {NavBar} from './NavBar';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AvalancheProvider, ThemeProvider } from '../contexts';
+import UACWarning from './UACWarning';
 
 export const App = () => {
     const queryClient = new QueryClient({
@@ -25,6 +26,7 @@ export const App = () => {
             <AvalancheProvider>
                 <QueryClientProvider client={queryClient}>
                     <div className="app">
+                        <UACWarning />
                         <NavBar />
                         <MainPage />
                         <Footer />

@@ -28,7 +28,7 @@ export const ThemeSlider = () => {
                     <Thumb>
                         <Nightlight
                             style={{
-                                color: '#00005e',
+                                color: '#00003c',
                                 transform: 'rotate(328deg)',
                             }}
                         />

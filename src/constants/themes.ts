@@ -15,6 +15,12 @@ export const lightTheme = createTheme({
             main: colorWhite,
             contrastText: '#212121',
         },
+        common: {
+            white: colorWhite,
+        },
+        warning: {
+            main: '#ed6c02',
+        },
     },
     typography: {
         fontSize: 14,
@@ -39,6 +45,9 @@ export const darkTheme = createTheme({
         },
         common: {
             white: colorWhite,
+        },
+        warning: {
+            main: '#ed6c02',
         },
     },
     components: {
