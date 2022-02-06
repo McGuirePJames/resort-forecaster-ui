@@ -7,6 +7,7 @@ html {
     font-weight: 100;
     font-size: 13pt;
     background-color: $color-gray;
+    max-width: 100%;
 
     body, #root, .app {
         height: inherit;
