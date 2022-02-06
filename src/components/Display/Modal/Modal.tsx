@@ -41,20 +41,26 @@ export const Modal: React.FC<ModalProps> = ({
 
     const renderModal = () => {
         return (
-            <Box className={classNames('modal', className)} sx={{
-                backgroundColor: 'secondary.main',
-                color: 'secondary.contrastText',
-            }}>
-                <div className="modal__header-row">
-                    <div className="modal__header">{header}</div>
-                    <FontAwesomeIcon
-                        className="modal__close-icon"
-                        icon={faTimes}
-                        onClick={handleCloseIconClick}
-                    />
-                </div>
-                {children}
-            </Box>
+            <>
+                <div className="modal__background" />
+                <Box
+                    className={classNames('modal', className)}
+                    sx={{
+                        backgroundColor: 'secondary.main',
+                        color: 'secondary.contrastText',
+                    }}
+                >
+                    <div className="modal__header-row">
+                        <div className="modal__header">{header}</div>
+                        <FontAwesomeIcon
+                            className="modal__close-icon"
+                            icon={faTimes}
+                            onClick={handleCloseIconClick}
+                        />
+                    </div>
+                    {children}
+                </Box>
+            </>
         );
     };
 
