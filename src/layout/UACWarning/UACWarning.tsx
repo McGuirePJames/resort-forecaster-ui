@@ -47,7 +47,7 @@ export const UACWarning = () => {
                     </Typography>
                     <div className="uac-warning__warning">
                         The data is for information purposes only and not an
-                        indication of current conditions.
+                        indication of current conditions
                     </div>
                 </div>
             </div>

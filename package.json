@@ -7,21 +7,12 @@
         "@emotion/styled": "^11.6.0",
         "@fortawesome/free-solid-svg-icons": "^5.15.4",
         "@fortawesome/react-fontawesome": "^0.1.17",
-        "@graphql-codegen/cli": "^2.4.0",
-        "@graphql-codegen/typescript-graphql-request": "^4.3.3",
         "@mui/icons-material": "^5.3.0",
         "@mui/material": "^5.3.1",
         "@mui/styles": "^5.3.0",
-        "@testing-library/jest-dom": "^5.15.0",
-        "@testing-library/react": "^11.2.7",
-        "@testing-library/user-event": "^12.8.3",
-        "@types/jest": "^26.0.24",
-        "@types/react": "^17.0.35",
-        "@types/react-dom": "^17.0.11",
         "classnames": "^2.3.1",
         "graphql": "^16.3.0",
         "graphql-request": "^4.0.0",
-        "i": "^0.3.7",
         "lodash.debounce": "^4.0.8",
         "node-sass": "^6.0.1",
         "normalize.css": "^8.0.1",
@@ -33,9 +24,6 @@
         "react-query": "^3.34.5",
         "react-scripts": "4.0.3",
         "react-toastify": "^8.1.0",
-        "resort-forecaster": "file:resort-forecaster-0.1.0.tgz",
-        "supercluster": "^7.1.4",
-        "use-supercluster": "^0.4.0",
         "usehooks-ts": "^2.0.2",
         "web-vitals": "^1.1.2",
         "yarn": "^1.22.17"
@@ -52,10 +40,7 @@
         "prepare": "npm.cmd run compile",
         "pretest": "npm.cmd run compile",
         "posttest": "npm.cmd run lint",
-        "generate": "graphql-codegen --config codegen.yml",
-        "generateAgain": "graphql codegen --config codegen.yml",
         "codegen": "graphql-codegen --config codegen.yml",
-        "codegenAgain": "graphql-codegen --config codegen.yml"
     },
     "eslintConfig": {
         "extends": [
@@ -75,20 +60,24 @@
             "last 1 safari version"
         ]
     },
-    "resolutions": {
-        "react-error-overlay": "6.0.9"
-    },
     "devDependencies": {
         "@graphql-codegen/cli": "2.4.0",
         "@graphql-codegen/introspection": "2.1.1",
         "@graphql-codegen/typescript": "2.4.2",
         "@graphql-codegen/typescript-document-nodes": "2.2.2",
         "@graphql-codegen/typescript-graphql-files-modules": "2.1.1",
+        "@graphql-codegen/typescript-graphql-request": "^4.3.3",
         "@graphql-codegen/typescript-operations": "2.2.2",
         "@graphql-codegen/urql-introspection": "2.1.1",
+        "@testing-library/jest-dom": "^5.15.0",
+        "@testing-library/react": "^11.2.7",
+        "@testing-library/user-event": "^12.8.3",
+        "@types/jest": "^26.0.24",
         "@types/lodash.debounce": "^4.0.6",
         "@types/mapbox-gl": "^2.6.0",
         "@types/node": "^14.17.34",
+        "@types/react": "^17.0.35",
+        "@types/react-dom": "^17.0.11",
         "gts": "^3.1.0",
         "prettier": "2.4.1",
         "typescript": "^4.5.4"
