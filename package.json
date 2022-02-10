@@ -40,7 +40,7 @@
         "prepare": "npm.cmd run compile",
         "pretest": "npm.cmd run compile",
         "posttest": "npm.cmd run lint",
-        "codegen": "graphql-codegen --config codegen.yml",
+        "codegen": "graphql-codegen --config codegen.yml"
     },
     "eslintConfig": {
         "extends": [

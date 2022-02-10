@@ -7,7 +7,7 @@ import './UACWarning.scss';
 export const UACWarning = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
 
-    const uacWarningCookieName = 'avamap_acknowledgedwarning';
+    const uacWarningCookieName = 'acknowledgedwarning';
 
     useEffect(() => {
         const localStorageWarningValue =

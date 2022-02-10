@@ -1,6 +1,7 @@
-import {createContext, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 import {ThemeProvider as ThemeProviderMui} from '@mui/material';
 import {darkTheme, lightTheme} from '../constants/themes';
+import {preferredThemeLocalStorageKey} from '../constants/variables';
 
 export enum Theme {
     Light = 1,
@@ -19,6 +20,18 @@ export const ThemeContext = createContext<ThemeContextProps>({
 
 export const ThemeProvider: React.FC = ({children}) => {
     const [currentTheme, setCurrentTheme] = useState<Theme>(Theme.Light);
+
+    useEffect(() => {
+        const preferredTheme = localStorage.getItem(
+            preferredThemeLocalStorageKey
+        );
+
+        if (preferredTheme) {
+            setTheme(+(preferredTheme as unknown as Theme));
+        } else if (window.matchMedia('(prefers-color-scheme: dark)')) {
+            setTheme(Theme.Dark);
+        }
+    }, []);
 
     const setTheme = (theme: Theme) => {
         setCurrentTheme(theme);

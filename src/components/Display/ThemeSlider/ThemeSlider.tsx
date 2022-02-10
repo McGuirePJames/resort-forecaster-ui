@@ -2,6 +2,7 @@ import {Switch} from '@mui/material';
 import {useContext} from 'react';
 import {Theme, ThemeContext} from '../../../contexts/themeContext';
 import {Nightlight, LightMode} from '@mui/icons-material';
+import {preferredThemeLocalStorageKey} from '../../../constants/variables';
 import './ThemeSlider.scss';
 
 export const ThemeSlider = () => {
@@ -9,16 +10,18 @@ export const ThemeSlider = () => {
 
     const handleSwitchClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         const isChecked = event.target.checked;
+        const preferredTheme = isChecked ? Theme.Light : Theme.Dark;
 
-        if (isChecked) {
-            themeContext.setTheme(Theme.Light);
-        } else {
-            themeContext.setTheme(Theme.Dark);
-        }
+        setLocalStoragePreferredTheme(preferredTheme);
+        themeContext.setTheme(preferredTheme);
     };
 
     const Thumb: React.FC = ({children}) => {
         return <div className="thumb">{children}</div>;
+    };
+
+    const setLocalStoragePreferredTheme = (theme: Theme) => {
+        localStorage.setItem(preferredThemeLocalStorageKey, theme.toString());
     };
 
     return (
@@ -61,7 +64,7 @@ export const ThemeSlider = () => {
                 onChange={event => {
                     handleSwitchClick(event);
                 }}
-                defaultChecked
+                checked={themeContext.theme === Theme.Light}
             />
         </div>
     );
