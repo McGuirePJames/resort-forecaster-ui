@@ -1,5 +1,4 @@
 import './Main.scss';
-import {CircularProgress} from '@mui/material';
 import {useContext, useEffect, useState} from 'react';
 import {AvalancheContext} from '../../contexts/avalancheContext';
 import {AvalancheMap} from './Map/AvalancheMap';
@@ -69,10 +68,6 @@ export const Main: React.FC = () => {
             setFilteredAvalanches(markers);
         }
     }, [filters]);
-
-    const renderLoader = () => {
-        return <CircularProgress size={80} />;
-    };
 
     const handleMapClick = (mapEvent: MapEvent) => {
         if (mapEvent?.features?.[0]?.properties) {
