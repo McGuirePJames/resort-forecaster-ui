@@ -1,5 +1,5 @@
-import {faBug, faComment, faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {BottomNavigation, Box, Typography} from '@mui/material';
 import {useState} from 'react';
 import {colorWhite} from '../../constants/colors';
@@ -56,7 +56,7 @@ export const Footer = () => {
                         sx={{color: colorWhite, fontSize: 20}}
                         onClick={() => handleFooterItemClick(FeedbackType.Bug)}
                     >
-                        <FontAwesomeIcon icon={faBug} />
+                        <FontAwesomeIcon icon={['fas', 'bug']} />
                         {FeedbackTypeLabels.get(FeedbackType.Bug)}
                     </Typography>
                 </Box>
@@ -67,7 +67,7 @@ export const Footer = () => {
                             handleFooterItemClick(FeedbackType.Feature)
                         }
                     >
-                        <FontAwesomeIcon icon={faComment} />
+                        <FontAwesomeIcon icon={['fas', 'comment']} />
                         {FeedbackTypeLabels.get(FeedbackType.Feature)}
                     </Typography>
                 </Box>
@@ -78,7 +78,7 @@ export const Footer = () => {
                             handleFooterItemClick(FeedbackType.General)
                         }
                     >
-                        <FontAwesomeIcon icon={faEnvelope} />
+                        <FontAwesomeIcon icon={['fas', 'envelope']} />
                         {FeedbackTypeLabels.get(FeedbackType.General)}
                     </Typography>
                 </Box>

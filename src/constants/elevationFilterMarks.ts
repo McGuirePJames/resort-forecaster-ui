@@ -1,10 +1,8 @@
-import {Mark} from '@mui/material';
-
 interface ScaledValue {
     scaledValue: number
 }
 
-export const elevationFilterMarks: Array<Mark & ScaledValue> = [
+export const elevationFilterMarks: Array<any & ScaledValue> = [
     {
         label: '5',
         value: 1,

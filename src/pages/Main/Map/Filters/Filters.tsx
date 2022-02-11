@@ -6,7 +6,6 @@ import WidthFilter from './WidthFilter';
 import {DepthFilter} from './DepthFilter';
 import {ElevationFilter} from './ElevationFilter';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCaretLeft, faCaretRight} from '@fortawesome/free-solid-svg-icons';
 import {useState} from 'react';
 import classNames from 'classnames';
 import {Box, Typography, useTheme} from '@mui/material';
@@ -35,7 +34,7 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
                                 color: theme.palette.secondary.contrastText,
                             }}
                             className="caret"
-                            icon={faCaretLeft}
+                            icon={['fas', 'caret-left']}
                             onClick={() => handleCollapseClick(true)}
                         />
                     </>
@@ -46,7 +45,7 @@ export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
                             color: theme.palette.secondary.contrastText,
                             marginRight: '0',
                         }}
-                        icon={faCaretRight}
+                        icon={['fas', 'caret-right']}
                         className="caret"
                         onClick={() => handleCollapseClick(false)}
                     />

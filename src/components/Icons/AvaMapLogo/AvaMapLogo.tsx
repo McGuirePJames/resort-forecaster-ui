@@ -1,5 +1,3 @@
-import { faMountain } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {colorSecondary, colorWhite} from '../../../constants/colors';
 import './AvaMapLogo.scss';
 
@@ -58,9 +56,6 @@ export const AvaMapIcon: React.FC<AvaMapIconProps> = ({
                     />
                 </g>
             </svg>
-            <FontAwesomeIcon icon={faMountain} />
-            <FontAwesomeIcon icon={faMountain} />
-            <FontAwesomeIcon icon={faMountain} />
         </div>
     );
 };

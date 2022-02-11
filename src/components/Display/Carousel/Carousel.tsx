@@ -1,9 +1,3 @@
-import {
-    faChevronLeft,
-    faChevronRight,
-    faCircle,
-} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { Card } from '../Card';
@@ -25,17 +19,12 @@ export const Carousel: React.FC<CarouselProps> = ({cardData}) => {
     const renderControls = () => {
         return (
             <div className="controls">
-                <FontAwesomeIcon
-                    icon={faChevronLeft}
-                    className="controls__arrow controls__arrow-left"
-                />
                 <div className="navigation-circles">
                     {Array(cardData?.length)
                         .fill('')
                         .map((_, i) => {
                             return (
-                                <FontAwesomeIcon
-                                    icon={faCircle}
+                                <div
                                     key={i}
                                     className={classNames({
                                         'navigation-circles__selected':
@@ -48,10 +37,6 @@ export const Carousel: React.FC<CarouselProps> = ({cardData}) => {
                             );
                         })}
                 </div>
-                <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className="controls__arrow controls__arrow-right"
-                />
             </div>
         );
     };

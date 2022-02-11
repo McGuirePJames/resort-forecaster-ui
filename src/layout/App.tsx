@@ -7,6 +7,9 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AvalancheProvider, ThemeProvider } from '../contexts';
 import UACWarning from './UACWarning';
+import { useIcons } from '../utilities/customHooks/useIcons';
+import { faBug, faComment, faEnvelope, faTimes, faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 export const App = () => {
     const queryClient = new QueryClient({
@@ -20,6 +23,15 @@ export const App = () => {
             },
         },
     });
+
+    useIcons([
+        faBug as IconDefinition,
+        faComment as IconDefinition,
+        faEnvelope as IconDefinition,
+        faTimes as IconDefinition,
+        faCaretLeft as IconDefinition,
+        faCaretRight as IconDefinition,
+    ]);
 
     return (
         <ThemeProvider>

@@ -1,7 +1,6 @@
 import {Link, Paper} from '@mui/material';
 import './AvalancheInfoOverlay.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Avalanche} from '../../../../models/Avalanche';
 
 export interface AvalancheInfoOverlayProps {
@@ -61,7 +60,7 @@ export const AvalancheInfoOverlay: React.FC<AvalancheInfoOverlayProps> = ({
                 >
                     {avalanche.externalId}
                 </Link>
-                <FontAwesomeIcon icon={faTimes} onClick={onClose} />
+                <FontAwesomeIcon icon={['fas', 'times']} onClick={onClose} />
             </div>
             {Object.entries(avalanche).map(avalancheEntry => {
                 return renderData(avalancheEntry);

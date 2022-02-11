@@ -1,5 +1,4 @@
 import './Modal.scss';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useEffect} from 'react';
 import classNames from 'classnames';
@@ -54,7 +53,7 @@ export const Modal: React.FC<ModalProps> = ({
                         <div className="modal__header">{header}</div>
                         <FontAwesomeIcon
                             className="modal__close-icon"
-                            icon={faTimes}
+                            icon={['fas', 'times']}
                             onClick={handleCloseIconClick}
                         />
                     </div>
