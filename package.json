@@ -28,6 +28,7 @@
         "react-toastify": "^8.1.0",
         "usehooks-ts": "^2.0.2",
         "web-vitals": "^1.1.2",
+        "worker-loader": "^3.0.8",
         "yarn": "^1.22.17"
     },
     "scripts": {
@@ -57,9 +58,11 @@
             "not op_mini all"
         ],
         "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
+            ">0.2%",
+            "not dead",
+            "not ie 11",
+            "not chrome < 51",
+            "not safari < 10"
         ]
     },
     "devDependencies": {

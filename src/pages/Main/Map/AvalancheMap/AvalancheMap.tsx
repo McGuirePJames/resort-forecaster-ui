@@ -1,8 +1,15 @@
 import {useEffect, useRef, useState} from 'react';
 import './AvalancheMap.scss';
 import ReactMapGL, {MapEvent, MapRef, Source} from 'react-map-gl';
+// eslint-disable-next-line node/no-extraneous-import
+import mapboxgl from 'mapbox-gl';
 import {AvalancheMapLayers} from '../MapLayers';
-import { Avalanche } from '../../../../models/Avalanche';
+import {Avalanche} from '../../../../models/Avalanche';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+mapboxgl.workerClass =
+    require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 export interface AvalancheMapProps {
     avalanches: Avalanche[];
