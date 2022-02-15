@@ -9,7 +9,9 @@ import {MapEvent} from 'react-map-gl';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import {Avalanche} from '../../models/Avalanche';
-import { QueryErrors } from '../../components/Display/QueryErrors';
+import {QueryErrors} from '../../components/Display/QueryErrors';
+import {UACWarning} from '../../layout/UACWarning';
+import {CircularProgress} from '@mui/material';
 
 export const Main: React.FC = () => {
     const avalanchesQuery = useAvalanchesQuery();
@@ -21,7 +23,7 @@ export const Main: React.FC = () => {
         useState<boolean>(false);
 
     const [selectedAvalanche, setSelectedAvalanche] = useState<Avalanche>();
-    const { filters } = useContext(AvalancheContext);
+    const {filters} = useContext(AvalancheContext);
     const getAvalanchesWithLatLng = (avalancheData: Avalanche[]) => {
         const avalanchesWithLatLng = avalancheData.filter(
             x => x?.latitude && x?.longitude
@@ -95,34 +97,47 @@ export const Main: React.FC = () => {
         setSelectedAvalanche(undefined);
     };
 
-    return (
-        <main>
-            <QueryErrors />
-            <div className="map-container">
-                <div className="map-container__filter">
-                    <Filters filteredAvalanches={filteredAvalanches} />
-                </div>
-                <div
-                    className={classNames('map-container__map', {
-                        'map-container__map--pointer':
-                            isHoveringOnUnclusteredPoint,
-                    })}
-                >
-                    <AvalancheMap
-                        avalanches={filteredAvalanches}
-                        onMapClick={handleMapClick}
-                        onHover={handleOnHover}
-                    />
-                </div>
-                {selectedAvalanche && (
-                    <div className="map-container__overlay">
-                        <AvalancheInfoOverlay
-                            avalanche={selectedAvalanche}
-                            onClose={handleOnInfoOverlayClose}
+    const renderLoader = () => {
+        return <CircularProgress className="main__loader" disableShrink={true} size={120} />;
+    };
+
+    const renderMainContent = () => {
+        return (
+            <>
+                <UACWarning />
+                <QueryErrors />
+                <div className="map-container">
+                    <div className="map-container__filter">
+                        <Filters filteredAvalanches={filteredAvalanches} />
+                    </div>
+                    <div
+                        className={classNames('map-container__map', {
+                            'map-container__map--pointer':
+                                isHoveringOnUnclusteredPoint,
+                        })}
+                    >
+                        <AvalancheMap
+                            avalanches={filteredAvalanches}
+                            onMapClick={handleMapClick}
+                            onHover={handleOnHover}
                         />
                     </div>
-                )}
-            </div>
+                    {selectedAvalanche && (
+                        <div className="map-container__overlay">
+                            <AvalancheInfoOverlay
+                                avalanche={selectedAvalanche}
+                                onClose={handleOnInfoOverlayClose}
+                            />
+                        </div>
+                    )}
+                </div>
+            </>
+        );
+    };
+
+    return (
+        <main>
+            {avalanchesQuery.isLoading ? renderLoader() : renderMainContent()}
         </main>
     );
 };

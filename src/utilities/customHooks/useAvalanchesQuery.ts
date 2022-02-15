@@ -6,7 +6,7 @@ export const useAvalanchesQuery = () => {
         'avalanches',
         () => graph.GetAvalanches(),
         {
-            select: res => {
+            select: (res) => {
                 return {
                     avalanches: res?.avalanches?.map(avalanche => {
                         return {

@@ -2,6 +2,7 @@
 
 main {
     height: 90vh;
+    position: relative;
 
     @include phone {
         height: 82vh;
@@ -39,5 +40,13 @@ main {
             top: 30px;
             right: 50px;
         }
+    }
+
+    .main__loader {
+        z-index: 100000;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
