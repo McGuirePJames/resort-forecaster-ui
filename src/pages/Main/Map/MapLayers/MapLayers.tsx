@@ -1,5 +1,5 @@
 import {Layer, LayerProps} from 'react-map-gl';
-import { colorAqua, colorGreen, colorMagenta, colorOrange, colorPink, colorYellow } from '../../../../constants/colors';
+import { colorGreen, colorOrange, colorPink, colorYellow } from '../../../../constants/colors';
 
 export const AvalancheMapLayers = () => {
     const clusterLayer: LayerProps = {

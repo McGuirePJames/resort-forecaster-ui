@@ -1,6 +1,6 @@
-import {forwardRef, ReactElement, useEffect, useRef, useState} from 'react';
+import {forwardRef, useEffect, useState} from 'react';
 import './AvalancheMap.scss';
-import ReactMapGL, {MapEvent, MapRef, Source} from 'react-map-gl';
+import ReactMapGL, {MapEvent, Source} from 'react-map-gl';
 // eslint-disable-next-line node/no-extraneous-import
 import mapboxgl from 'mapbox-gl';
 import {AvalancheMapLayers} from '../MapLayers';
