@@ -1,13 +1,12 @@
 import './Main.scss';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {AvalancheContext} from '../../contexts/avalancheContext';
 import {AvalancheMap} from './Map/AvalancheMap';
 import {Filters} from './Map/Filters';
 import {useAvalanchesQuery} from '../../utilities/customHooks/useAvalanchesQuery';
 import AvalancheInfoOverlay from './Map/AvalancheInfoOverlay';
-import {MapEvent} from 'react-map-gl';
+import {MapEvent, MapRef} from 'react-map-gl';
 import classNames from 'classnames';
-import debounce from 'lodash.debounce';
 import {Avalanche} from '../../models/Avalanche';
 import {QueryErrors} from '../../components/Display/QueryErrors';
 import {UACWarning} from '../../layout/UACWarning';
@@ -15,14 +14,15 @@ import {CircularProgress} from '@mui/material';
 
 export const Main: React.FC = () => {
     const avalanchesQuery = useAvalanchesQuery();
-
+    const mapRef = useRef<MapRef>();
     const [filteredAvalanches, setFilteredAvalanches] = useState<Avalanche[]>(
         []
     );
     const [isHoveringOnUnclusteredPoint, setIsHoveringOnUnclusteredPoint] =
         useState<boolean>(false);
 
-    const [selectedAvalanche, setSelectedAvalanche] = useState<Avalanche>();
+    const [activeAvalancheId, setActiveAvalancheId] = useState<string | undefined>();
+    const [avalanchePreview, setAvalanchePreview] = useState<Avalanche | undefined>();
     const {filters} = useContext(AvalancheContext);
     const getAvalanchesWithLatLng = (avalancheData: Avalanche[]) => {
         const avalanchesWithLatLng = avalancheData.filter(
@@ -78,28 +78,52 @@ export const Main: React.FC = () => {
             if (!properties.cluster) {
                 const avalanche = mapEvent.features[0]?.properties as Avalanche;
 
-                setSelectedAvalanche(avalanche);
+                setActiveAvalancheId(avalanche.id);
+                setAvalanchePreview(avalanche);
             }
         }
     };
 
-    const handleOnHover = debounce(event => {
-        const featureId = event?.features?.[0]?.layer?.id;
+    const handleMapOnMouseMove = (event: MapEvent) => {
+        const bp = mapRef.current?.queryRenderedFeatures(event.point);
 
-        if (featureId && featureId === 'unclustered-point') {
-            setIsHoveringOnUnclusteredPoint(true);
+        if (bp && bp.length > 0) {
+            const featureType = bp[0].layer?.id ?? '';
+
+            if (featureType && featureType === 'unclustered-point') {
+                setIsHoveringOnUnclusteredPoint(true);
+            }
         } else {
             setIsHoveringOnUnclusteredPoint(false);
         }
-    }, 1);
+    };
 
     const handleOnInfoOverlayClose = () => {
-        setSelectedAvalanche(undefined);
+        setAvalanchePreview(undefined);
+        setActiveAvalancheId(undefined);
     };
 
     const renderLoader = () => {
-        return <CircularProgress className="main__loader" disableShrink={true} size={120} />;
+        return (
+            <CircularProgress
+                className="main__loader"
+                disableShrink={true}
+                size={120}
+            />
+        );
     };
+
+    const avalancheMemo = useMemo(() => {
+        return (
+            <AvalancheMap
+                avalanches={filteredAvalanches}
+                activeAvalancheId={activeAvalancheId}
+                onMapClick={handleMapClick}
+                onMouseMove={handleMapOnMouseMove}
+                ref={mapRef}
+            />
+        );
+    }, [filteredAvalanches, activeAvalancheId]);
 
     const renderMainContent = () => {
         return (
@@ -116,16 +140,12 @@ export const Main: React.FC = () => {
                                 isHoveringOnUnclusteredPoint,
                         })}
                     >
-                        <AvalancheMap
-                            avalanches={filteredAvalanches}
-                            onMapClick={handleMapClick}
-                            onHover={handleOnHover}
-                        />
+                        {avalancheMemo}
                     </div>
-                    {selectedAvalanche && (
+                    {avalanchePreview && (
                         <div className="map-container__overlay">
                             <AvalancheInfoOverlay
-                                avalanche={selectedAvalanche}
+                                avalanche={avalanchePreview}
                                 onClose={handleOnInfoOverlayClose}
                             />
                         </div>
