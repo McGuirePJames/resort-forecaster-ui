@@ -35,33 +35,45 @@ export const AvalancheMap: React.FC<AvalancheMapProps> = ({
         type: 'FeatureCollection',
         features: [],
     };
+    const [activeMarkerId, setActiveMarkerId] = useState<string>('');
+
+    const getMarkers = () => {
+        const markerGeoCollection: GeoJSON.FeatureCollection<GeoJSON.Geometry> =
+            {
+                type: 'FeatureCollection',
+                features: (avalanches ?? []).map(avalanche => {
+                    return {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [
+                                avalanche.longitude ?? 0,
+                                avalanche.latitude ?? 0,
+                            ],
+                        },
+                        properties: {
+                            ...avalanche,
+                            ...(avalanche.id === activeMarkerId && {isActive: true}),
+                        },
+                    };
+                }),
+            };
+
+        return markerGeoCollection;
+    };
 
     useEffect(() => {
         if (avalanches?.length > 0) {
-            const markerGeoCollection: GeoJSON.FeatureCollection<GeoJSON.Geometry> =
-                {
-                    type: 'FeatureCollection',
-                    features: (avalanches ?? []).map(avalanche => {
-                        return {
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [
-                                    avalanche.longitude ?? 0,
-                                    avalanche.latitude ?? 0,
-                                ],
-                            },
-                            id: '',
-                            properties: {...avalanche},
-                        };
-                    }),
-                };
-
-            setMarkersGeoCollection(markerGeoCollection);
+            const markers = getMarkers();
+            setMarkersGeoCollection(markers);
         }
-    }, [avalanches]);
+    }, [avalanches, activeMarkerId]);
 
     const handleMapClick = (event: MapEvent) => {
+        if (event?.features?.[0]?.properties) {
+            setActiveMarkerId(event.features[0].properties.id ?? '');
+        }
+
         if (onMapClick) {
             onMapClick(event);
         }

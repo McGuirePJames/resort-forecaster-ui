@@ -1,4 +1,5 @@
 export interface Avalanche {
+    id: string;
     externalId?: string;
     date?: Date;
     latitude?: number;
