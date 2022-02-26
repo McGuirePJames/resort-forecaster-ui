@@ -13,6 +13,8 @@ export const AvalancheInfoOverlay: React.FC<AvalancheInfoOverlayProps> = ({
     onClose,
 }) => {
     const renderData = (avalancheEntry: [string, string | number | null]) => {
+        const propertiesToExclude = ['isActive', 'id', 'externalId'];
+
         if (avalancheEntry?.[0] && avalancheEntry?.[1]) {
             const key = avalancheEntry[0];
             let value = avalancheEntry[1];
@@ -21,7 +23,7 @@ export const AvalancheInfoOverlay: React.FC<AvalancheInfoOverlayProps> = ({
                 value += "'";
             } else if (key === 'depth') {
                 value += '"';
-            } else if (key === 'id' || key === 'externalId') {
+            } else if (propertiesToExclude.includes(key)) {
                 return null;
             }
 
