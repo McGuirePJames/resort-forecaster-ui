@@ -42,6 +42,9 @@ export const UACWarning = () => {
                         gutterBottom
                         component="div"
                         className="uac-warning__title"
+                        sx={{
+                            color: 'secondary.contrastText',
+                        }}
                     >
                         Data Provided By Utah Avalanche Center
                     </Typography>
