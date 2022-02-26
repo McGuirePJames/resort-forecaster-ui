@@ -6,7 +6,7 @@ import WidthFilter from './WidthFilter';
 import {DepthFilter} from './DepthFilter';
 import {ElevationFilter} from './ElevationFilter';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {Box, Typography, useTheme} from '@mui/material';
 import {Avalanche} from '../../../../models/Avalanche';
@@ -18,6 +18,12 @@ export interface FiltersProps {
 export const Filters: React.FC<FiltersProps> = ({filteredAvalanches}) => {
     const [isFilterCollapsed, setIsFilterCollapsed] = useState<boolean>(false);
     const theme = useTheme();
+
+    useEffect(() => {
+        if (window.innerWidth < 800) {
+            setIsFilterCollapsed(true);
+        }
+    }, []);
 
     const handleCollapseClick = (isCollapsed: boolean) => {
         setIsFilterCollapsed(isCollapsed);
