@@ -1,8 +1,9 @@
-## Frontend for ResortForecaster
+# AvaMap Front-end
 
-
-#### Technologies Used
+### Technologies Used
 - React
 - GraphQL
 - Sass
 - TypeScript
+
+[https://www.ava-map.com](https://www.ava-map.com)
